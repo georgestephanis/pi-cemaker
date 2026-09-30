@@ -41,7 +41,8 @@ const char* power_mgr_get_state_str(power_state_t state);
 uint32_t power_mgr_get_countdown_remaining_ms(void);
 
 // Manual control overrides
-void power_mgr_force_5v_enable(bool enable);
+void power_mgr_force_5v_enable(bool enable); // false = hold rail off until re-enabled
+bool power_mgr_manual_cut_active(void);
 void power_mgr_pulse_pi_power_button(void);
 void power_mgr_request_clean_shutdown(void);
 

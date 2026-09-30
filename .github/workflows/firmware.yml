@@ -1,0 +1,16 @@
+name: firmware
+on:
+  push:
+    branches: [trunk]
+  pull_request:
+jobs:
+  host-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and run host tests
+        working-directory: firmware
+        run: |
+          cmake -B build -S .
+          cmake --build build
+          ./build/pi_cemaker_test

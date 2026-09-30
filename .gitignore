@@ -1,0 +1,30 @@
+# Build directories
+build/
+bin/
+obj/
+.pio/
+.cache/
+
+# IDE & Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# KiCad temporary & auto-save files
+*.kicad_prl
+*.kicad_pcb-bak
+*.kicad_sch-bak
+*-save.kicad_pcb
+*-save.kicad_sch
+_autosave-*
+*.lck
+fp-info-cache
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/

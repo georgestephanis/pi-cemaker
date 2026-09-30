@@ -25,7 +25,8 @@ This document provides operational context, architectural reference, build proce
 │   ├── ARCHITECTURE.md       # Power domains, block diagram, telemetry
 │   ├── HARDWARE_DESIGN.md    # Schematic guidance, components, BOM, PCB layout
 │   ├── USB_HID_UPS_SPEC.md   # HID report descriptor & Linux integration spec
-│   └── FIRMWARE_ROADMAP.md   # Firmware architecture, TinyUSB stack, milestones
+│   ├── FIRMWARE_ROADMAP.md   # Firmware architecture, TinyUSB stack, milestones
+│   └── CRITICAL_CONSIDERATIONS.md # Edge cases, zombie halt reboot, cell balance
 ├── firmware/                 # RP2040 C/C++ firmware (Pico SDK / TinyUSB)
 ├── hardware/                 # KiCad PCB schematics, board layout, Gerbers, BOM
 ├── README.md                 # Symlink to docs/README.md
@@ -41,6 +42,8 @@ This document provides operational context, architectural reference, build proce
 - **Battery Safety:** Never override or bypass hardware battery thresholds (max 8.4V charge, min 6.0V discharge cutoff).
 - **5V Rail Stability:** The 5.1V output to the Raspberry Pi 5 must never experience drops below 4.75V during power source switchover; otherwise the Raspberry Pi 5 PMIC will trigger an under-voltage restart.
 - **No Dynamic Memory in Real-Time Loops:** Do not use `malloc` / `new` inside steady-state USB polling or ADC filtering loops.
+- **Zombie Halt Power-Cycle:** Ensure the post-shutdown power cut timer (45 seconds after `ShutdownImminent`) drops the 5V rail completely so the Pi 5 will auto-boot when mains power returns.
+- **RP2040 Dormant Sleep:** Transition the MCU into dormant sleep (<100µA) once the battery is depleted to avoid destructive parasitic discharge.
 
 ### USB HID UPS Compliance
 - Strictly follow the USB HID Power Device usage tables defined in [`docs/USB_HID_UPS_SPEC.md`](docs/USB_HID_UPS_SPEC.md).
@@ -55,3 +58,4 @@ This document provides operational context, architectural reference, build proce
 - Hardware Design: [`docs/HARDWARE_DESIGN.md`](docs/HARDWARE_DESIGN.md)
 - HID Power Device Spec: [`docs/USB_HID_UPS_SPEC.md`](docs/USB_HID_UPS_SPEC.md)
 - Firmware Plan: [`docs/FIRMWARE_ROADMAP.md`](docs/FIRMWARE_ROADMAP.md)
+- Critical Considerations & Edge Cases: [`docs/CRITICAL_CONSIDERATIONS.md`](docs/CRITICAL_CONSIDERATIONS.md)

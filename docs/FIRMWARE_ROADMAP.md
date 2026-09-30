@@ -2,6 +2,11 @@
 
 This document outlines the software architecture, toolchain, state machine, and development milestones for the **Pi-cemaker** RP2040 firmware.
 
+> [!CAUTION]
+> **UNDER ACTIVE CONSTRUCTION / PROTOTYPE PHASE**
+> 
+> This firmware roadmap reflects an active prototype in development and is **not complete yet**. It is **certainly NOT for sale**.
+
 ---
 
 ## 1. Toolchain & Framework Selection
@@ -47,19 +52,22 @@ This document outlines the software architecture, toolchain, state machine, and 
 
 ## 3. Development Milestones
 
-### Phase 1: USB HID UPS Proof of Concept (No Custom Hardware Needed)
-- **Goal:** Emulate a working UPS using a standard $4 Raspberry Pi Pico board.
-- **Actions:**
-  - Create the TinyUSB HID Power Device descriptor.
-  - Synthesize a simulated battery discharging from 100% to 0%.
-  - Plug Pico into a Raspberry Pi 5 USB port and verify that `upower`, desktop battery indicators, and `systemd-logind` clean shutdown work.
+### Phase 1: USB HID UPS & Core Firmware Implementation (Completed ✅)
+- **Goal:** USB-IF HID Power Device and CDC serial interface with full state machine and desktop simulation.
+- **Completed Actions:**
+  - Implemented TinyUSB HID Power Device descriptor (`0x84`/`0x85`) and composite CDC ACM.
+  - Implemented software simulation engine for automated battery discharge/recharge and AC loss testing.
+  - Implemented 45-second zombie halt mitigation state machine in `power_mgr.c`.
+  - Implemented interactive CDC CLI (`status`, `sim`, `shutdown`, `powercut`, `pulse-pwr`, `reboot-bootloader`).
+  - Implemented unit test suite (`test_hid_and_power.c`) passing 22/22 tests on host.
+  - See [`firmware/README.md`](../firmware/README.md) for build and simulation details.
 
-### Phase 2: Sensor & I2C Integration
-- **Goal:** Connect I2C power monitoring (INA219/INA226 or MP2762A) to the Pico.
+### Phase 2: Sensor & Hardware Telemetry (In Progress 🟡)
+- **Goal:** Real-time ADC oversampling and I2C power monitoring integration on prototype hardware.
 - **Actions:**
-  - Implement I2C telemetry driver.
-  - Calibrate battery voltage reading against precision multimeter.
-  - Implement 2S discharge curve mapping.
+  - Implemented 100 Hz ADC sampling and Exponential Moving Average (EMA) filtering for `V_BAT`, `V_BUS_IN`, `V_OUT`, and NTC thermistor.
+  - Implemented 2S Li-ion open-circuit voltage (OCV) State-of-Charge (SoC) lookup curve.
+  - Wire I2C driver to MP2762A registers on prototype board.
 
 ### Phase 3: Hardware Bring-Up & Power Path Validation
 - **Goal:** Flash firmware onto the first Pi-cemaker prototype PCB.

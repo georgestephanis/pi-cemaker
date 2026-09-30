@@ -28,7 +28,15 @@ This document provides operational context, architectural reference, build proce
 │   ├── FIRMWARE_ROADMAP.md   # Firmware architecture, TinyUSB stack, milestones
 │   └── CRITICAL_CONSIDERATIONS.md # Edge cases, zombie halt reboot, cell balance
 ├── firmware/                 # RP2040 C/C++ firmware (Pico SDK / TinyUSB)
-├── hardware/                 # KiCad PCB schematics, board layout, Gerbers, BOM
+│   ├── CMakeLists.txt        # Build system (RP2040 UF2 & host tests)
+│   ├── include/              # Headers (tusb_config, descriptors, telemetry, power_mgr, cli)
+│   ├── src/                  # Sources (main, descriptors, telemetry, power_mgr, cli)
+│   └── tests/                # Host unit tests and interactive CLI simulator runner
+├── hardware/                 # Circuit schematics, BOM, PCB layout guidelines, KiCad
+│   ├── SCHEMATICS.md         # 6 detailed subsystem schematics and calculations
+│   ├── BOM.md / BOM.csv      # Complete Bill of Materials with MPNs
+│   ├── PCB_LAYOUT_GUIDELINES.md # 4-layer stackup & 5A thermal guidelines
+│   └── kicad/                # KiCad 7/8 project, schematic, and board layout
 ├── README.md                 # Symlink to docs/README.md
 ├── AGENTS.md                 # Agent instructions and architectural invariants
 └── .gitignore

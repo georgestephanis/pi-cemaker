@@ -2,6 +2,11 @@
 
 This document specifies the USB interface implementation that allows **Pi-cemaker** to register natively as an Uninterruptible Power Supply (UPS) on Linux, Raspberry Pi OS, macOS, and Windows with **zero custom drivers or background software**.
 
+> [!CAUTION]
+> **UNDER ACTIVE CONSTRUCTION / PROTOTYPE PHASE**
+> 
+> This specification reflects an active prototype in development and is **not complete yet**. It is **certainly NOT for sale**.
+
 ---
 
 ## 1. Why USB HID Power Device?
@@ -41,22 +46,33 @@ The HID report descriptor uses two standardized usage pages:
 - **Usage Page `0x84`:** Power Device
 - **Usage Page `0x85`:** Battery System
 
-### Essential Usage Items Implemented
+### Implemented Reports Breakdown
 
-| Usage Name | Usage ID | Type | Description |
-|---|---|---|---|
-| **PowerDevice** | `0x84, 0x01` | Application | Declares the top-level UPS device |
-| **PresentStatus** | `0x84, 0x02` | Named Array / Bitmap | Bitmask of current power states |
-| ├─ `ACPresent` | `0x85, 0xD0` | Bit | 1 if wall power (USB-C in) is connected |
-| ├─ `Charging` | `0x85, 0x44` | Bit | 1 if battery is actively charging |
-| ├─ `Discharging` | `0x85, 0x45` | Bit | 1 if running on battery backup |
-| ├─ `FullyCharged`| `0x85, 0x46` | Bit | 1 if battery reaches 100% |
-| ├─ `BelowRemainingCapacityLimit` | `0x85, 0x42` | Bit | 1 if battery is below warning threshold (e.g., 20%) |
-| └─ `ShutdownImminent` | `0x84, 0x69` | Bit | 1 if battery is critically low (triggers OS shutdown) |
-| **RemainingCapacity** | `0x85, 0x66` | Dynamic Value | Battery charge remaining (0 to 100%) |
-| **RunTimeToEmpty** | `0x85, 0x68` | Dynamic Value | Estimated seconds of battery life remaining |
-| **Voltage** | `0x85, 0xBB` | Dynamic Value | Measured battery pack voltage in millivolts |
-| **ConfigVoltage** | `0x84, 0x40` | Static Value | Nominal battery pack voltage (7400 mV for 2S) |
+#### Input Report 1: UPS Status (`REPORT_ID_UPS_STATUS = 0x01`, 7 bytes packed)
+
+| Byte Offset | Usage Name | Usage ID | Type | Description |
+|---|---|---|---|---|
+| `Byte 0` | **Report ID** | — | Constant | `0x01` |
+| `Byte 1` | **PresentStatus** | `0x84, 0x02` | Logical Collection | 8-bit status bitmask: |
+| ├─ `Bit 0` | `ACPresent` | `0x85, 0xD0` | Bit | 1 if USB-C wall power is connected |
+| ├─ `Bit 1` | `Charging` | `0x85, 0x44` | Bit | 1 if battery is actively charging |
+| ├─ `Bit 2` | `Discharging` | `0x85, 0x45` | Bit | 1 if running on battery backup |
+| ├─ `Bit 3` | `FullyCharged` | `0x85, 0x46` | Bit | 1 if battery reaches 100% |
+| ├─ `Bit 4` | `BelowRemainingCapacityLimit`| `0x85, 0x42` | Bit | 1 if battery $\le 20\%$ (warning threshold) |
+| ├─ `Bit 5` | `ShutdownImminent` | `0x84, 0x69` | Bit | 1 if battery $\le 5\%$ (initiates OS shutdown) |
+| ├─ `Bit 6` | `BatteryPresent` | `0x85, 0xD1` | Bit | 1 if battery pack is connected |
+| └─ `Bit 7` | `NeedReplacement / Fault` | `0x85, 0x4B` | Bit | 1 on over-temp ($>55^\circ\text{C}$) or cell fault |
+| `Byte 2` | **RemainingCapacity** | `0x85, 0x66` | uint8_t | Battery charge remaining (0 to 100%) |
+| `Bytes 3-4` | **RunTimeToEmpty** | `0x85, 0x68` | uint16_t | Estimated seconds of battery life remaining |
+| `Bytes 5-6` | **Voltage** | `0x85, 0xBB` | uint16_t | Measured battery pack voltage in millivolts |
+
+#### Feature Report 2: Static Device Configuration (`REPORT_ID_UPS_CONFIG = 0x02`, 5 bytes packed)
+
+| Byte Offset | Usage Name | Usage ID | Type | Description |
+|---|---|---|---|---|
+| `Byte 0` | **Report ID** | — | Constant | `0x02` |
+| `Bytes 1-2` | **ConfigVoltage** | `0x84, 0x40` | uint16_t | Nominal 2S battery pack voltage (7400 mV) |
+| `Bytes 3-4` | **DesignCapacity** | `0x85, 0x67` | uint16_t | Nominal pack capacity (6000 mAh equivalent) |
 
 ---
 

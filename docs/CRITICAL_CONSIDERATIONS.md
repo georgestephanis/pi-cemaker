@@ -2,6 +2,11 @@
 
 This document details the real-world operational edge cases, hardware quirks, and protective design patterns that must be accounted for in **Pi-cemaker**.
 
+> [!CAUTION]
+> **UNDER ACTIVE CONSTRUCTION / PROTOTYPE PHASE**
+> 
+> This document details evolving design considerations and is **not complete yet**. It is **certainly NOT for sale**.
+
 ---
 
 ## 1. The "Zombie Halt" State & Cold-Boot Power Cycling
@@ -16,16 +21,16 @@ When the UPS signals a low battery, the Raspberry Pi OS executes an orderly shut
 
 ### The Solution: Post-Shutdown Power Cut Sequence
 1. **Signal:** Pi-cemaker asserts `ShutdownImminent = 1` over USB HID.
-2. **Timer Window:** Pi-cemaker starts a non-blocking **45-second countdown** (ample time for Linux to halt).
-3. **Power Cut:** After 45 seconds, the RP2040 pulls the TPS55289 `EN` pin LOW (or opens a series load switch), completely cutting 5.1V power to the Pi.
+2. **Timer Window:** Pi-cemaker starts a non-blocking **45-second countdown** (ample time for Linux to halt cleanly).
+3. **Power Cut:** After 45 seconds, the RP2040 drives `PIN_5V_EN` (`GPIO15`) LOW, cutting 5.1V power to the Pi 5 completely.
 4. **Auto-Reboot on Mains Return:** When wall power returns:
-   - The RP2040 detects `V_BUS_IN > 8V`.
-   - The RP2040 pulls the TPS55289 `EN` pin HIGH.
-   - Power is restored to the Pi 5, prompting a clean cold-boot automatically.
+   - The RP2040 detects `V_BUS_IN > 7.5V`.
+   - The RP2040 drives `PIN_5V_EN` (`GPIO15`) HIGH.
+   - 5.1V power is restored to the Pi 5 PMIC, prompting a clean cold-boot automatically.
 
 ### Hardware Wake Option: RPi 5 `PWR_BTN` / `GLOBAL_EN` Header
 The Raspberry Pi 5 includes a dedicated 2-pin JST-SH power button header (adjacent to the physical power button).
-- Pi-cemaker should provide a 2-pin header driven by an RP2040 open-drain N-FET.
+- Pi-cemaker provides a 2-pin JST-SH header (`J4`) driven by an RP2040 open-drain N-FET (`Q6`: 2N7002 driven by `GPIO14`).
 - This allows Pi-cemaker to pulse the Pi 5 power button to wake it up or cleanly request a shutdown via hardware if USB is disconnected.
 
 ---

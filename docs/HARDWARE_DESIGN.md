@@ -2,6 +2,13 @@
 
 This document details the hardware design, component trade-offs, schematic architecture, and mechanical layout considerations for **Pi-cemaker**.
 
+> [!CAUTION]
+> **UNDER ACTIVE CONSTRUCTION / PROTOTYPE PHASE**
+> 
+> This hardware specification reflects an active prototype in development and is **not complete yet**. It is **certainly NOT for sale**.
+> 
+> Detailed circuit schematics, formulas, and netlists are located in [`hardware/SCHEMATICS.md`](../hardware/SCHEMATICS.md). Complete BOM is in [`hardware/BOM.md`](../hardware/BOM.md) / [`hardware/BOM.csv`](../hardware/BOM.csv), layout guidelines in [`hardware/PCB_LAYOUT_GUIDELINES.md`](../hardware/PCB_LAYOUT_GUIDELINES.md), and KiCad files in [`hardware/kicad/`](../hardware/kicad/).
+
 ---
 
 ## 1. Design Paths & Component Selection

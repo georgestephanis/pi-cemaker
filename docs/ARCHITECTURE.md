@@ -2,6 +2,11 @@
 
 This document specifies the electrical architecture, power domains, switchover dynamics, and communication interfaces for **Pi-cemaker**.
 
+> [!CAUTION]
+> **UNDER ACTIVE CONSTRUCTION / PROTOTYPE PHASE**
+> 
+> This architecture document reflects an active prototype in development and is **not complete yet**. It is **certainly NOT for sale**.
+
 ---
 
 ## 1. High-Level Design Principles
@@ -85,22 +90,20 @@ The RP2040 is the central nerve center for Pi-cemaker:
                             │                                 │
  [USB-C to Pi 5 Data] ◀────▶│ USB D+/D- (TinyUSB HID + CDC)   │
                             │                                 │
- [I2C0: SDA/SCL]      ◀────▶│ I2C Master                      │
-                            │   ├── Charger (MP2762A/IP2368)  │
-                            │   ├── Fuel Gauge / ADC (INA219) │
-                            │   └── Optional 0.91" OLED       │
+ [I2C0: GPIO4/5]      ◀────▶│ I2C Master                      │
+                            │   ├── Charger (MP2762A)         │
+                            │   └── Stemma QT / Expansion     │
                             │                                 │
- [ADC0 / GPIO26]      ◀─────│ Battery Voltage Sense           │
- [ADC1 / GPIO27]      ◀─────│ Output Voltage Sense            │
- [ADC2 / GPIO28]      ◀─────│ Input Voltage Sense             │
- [ADC3 / Temp]        ◀─────│ Internal / NTC Thermistor       │
+ [ADC0 / GPIO26]      ◀─────│ Battery Voltage Sense (V_BAT)   │
+ [ADC1 / GPIO27]      ◀─────│ Input Voltage Sense (V_BUS_IN)  │
+ [ADC2 / GPIO28]      ◀─────│ Output Voltage Sense (V_OUT)   │
+ [ADC3 / GPIO29]      ◀─────│ NTC Thermistor Sense (TEMP)     │
                             │                                 │
- [GPIO Output]        ──────▶│ Charger Enable / Current Set    │
- [GPIO Output]        ──────▶│ Output Enable / Power Cycle     │
- [GPIO Output]        ──────▶│ Status LEDs (Power, Battery,   │
-                            │             Fault)              │
+ [GPIO15 Output]      ──────▶│ 5V Rail Enable / Power Cycle   │
+ [GPIO14 Output]      ──────▶│ Pi 5 Power Button (Open-Drain) │
+ [GPIO16/17/18 Out]   ──────▶│ Status LEDs (Power, Bat, Fault)│
                             │                                 │
- [GPIO Input]         ◀─────│ User Button (Power / Status)    │
+ [GPIO19 Input]       ◀─────│ User Button (Tactile Switch)   │
                             └─────────────────────────────────┘
 ```
 

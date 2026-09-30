@@ -4,6 +4,11 @@
 
 > *"Keeps your Pi's heartbeat going when the mains flatline."*
 
+> [!CAUTION]
+> **UNDER ACTIVE CONSTRUCTION / PROTOTYPE PHASE**
+> 
+> This project is currently an active work-in-progress and is **not complete yet**. It is **certainly NOT for sale**, nor is it ready for production deployment. Schematics, firmware, and PCB designs are evolving rapidly and are shared strictly for open-source collaborative hardware and firmware development.
+
 ---
 
 ## ⚡ Overview
@@ -79,6 +84,8 @@ All design documentation lives in this `docs/` folder:
 ## 🚀 Getting Started with Development
 
 To start developing in this repository:
+- **Firmware Implementation:** See [`firmware/`](../firmware) for the RP2040 TinyUSB HID Power Device firmware, interactive CLI simulator, and test suite.
+- **Hardware & Schematics:** See [`hardware/`](../hardware) for the complete circuit design, Bill of Materials, PCB layout guidelines, and KiCad project files.
 - Review [`AGENTS.md`](../AGENTS.md) for coding conventions, safety rules, and architecture guidelines.
 - Explore [`docs/HARDWARE_DESIGN.md`](HARDWARE_DESIGN.md) to evaluate the **Path A (Integrated IP2368)** vs. **Path B (Discrete MP2762A + Buck-Boost)** hardware choices.
 - Explore [`docs/CRITICAL_CONSIDERATIONS.md`](CRITICAL_CONSIDERATIONS.md) for vital edge cases around Pi 5 power-cycling, reverse cell insertion, and deep sleep.

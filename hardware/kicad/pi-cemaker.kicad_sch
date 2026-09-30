@@ -1,0 +1,100 @@
+(kicad_sch (version 20230121) (generator eeschema)
+
+  (uuid "b91e4a32-15f2-4e67-91a3-481308a0cb8b")
+
+  (paper "A3")
+
+  (title_block
+    (title "Pi-cemaker: 2S Li-ion UPS for Raspberry Pi 5")
+    (date "2026-09-30")
+    (rev "0.1-alpha")
+    (company "Web3 Pi Open Hardware")
+    (comment 1 "UNDER ACTIVE CONSTRUCTION - NOT FOR SALE")
+    (comment 2 "5.1V @ 5.0A Synchronous Buck-Boost with Native USB HID Power Device")
+  )
+
+  (text "SUB-CIRCUIT 1: USB-PD SINK & INRUSH PROTECTION (HUSB238 + SMAJ24A + DMP3010LK3)"
+    (at 25.4 38.1 0)
+    (effects (font (size 2 2) bold) (justify left bottom))
+    (uuid "0d18f5ec-5f75-433a-9e19-f5c71b6d194a")
+  )
+
+  (text "SUB-CIRCUIT 2: 2S BATTERY BMS & BALANCING (HY2120-LB + DUAL AO8822 + HY2212)"
+    (at 25.4 88.9 0)
+    (effects (font (size 2 2) bold) (justify left bottom))
+    (uuid "175c2e0f-90e8-46eb-a6b1-09419168b9f6")
+  )
+
+  (text "SUB-CIRCUIT 3: 2S SWITCHING CHARGER & POWER PATH (MP2762A + 2.2uH INDUCTOR)"
+    (at 25.4 139.7 0)
+    (effects (font (size 2 2) bold) (justify left bottom))
+    (uuid "4019a584-c5a4-44ee-b633-5c07b66a56e1")
+  )
+
+  (text "SUB-CIRCUIT 4: 5.1V @ 5A SYNCHRONOUS BUCK-BOOST (TPS55289 + 1.5uH + POLYMER CAPS)"
+    (at 215.9 38.1 0)
+    (effects (font (size 2 2) bold) (justify left bottom))
+    (uuid "6f3d9b41-2679-43c3-b09e-716499694ff8")
+  )
+
+  (text "SUB-CIRCUIT 5: RASPBERRY PI 5 USB-C HOST INTERFACE & PWR_BTN HEADER"
+    (at 215.9 88.9 0)
+    (effects (font (size 2 2) bold) (justify left bottom))
+    (uuid "7f4c102a-9284-482a-89a3-5c8cb20d4182")
+  )
+
+  (text "SUB-CIRCUIT 6: RP2040 MCU, 16MB FLASH, 3.3V LDO & ANALOG SENSE DIVIDERS"
+    (at 215.9 139.7 0)
+    (effects (font (size 2 2) bold) (justify left bottom))
+    (uuid "893c528f-7981-4f99-a681-37d45763cb59")
+  )
+
+  (global_label "V_BUS_IN" (shape input) (at 38.1 50.8 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid "a1b2c3d4-0001-4000-8000-000000000001")
+  )
+
+  (global_label "V_BAT" (shape bidirectional) (at 38.1 101.6 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid "a1b2c3d4-0002-4000-8000-000000000002")
+  )
+
+  (global_label "V_SYS" (shape bidirectional) (at 38.1 152.4 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid "a1b2c3d4-0003-4000-8000-000000000003")
+  )
+
+  (global_label "V_OUT" (shape output) (at 228.6 50.8 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid "a1b2c3d4-0004-4000-8000-000000000004")
+  )
+
+  (global_label "V_MCU_3V3" (shape output) (at 228.6 152.4 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid "a1b2c3d4-0005-4000-8000-000000000005")
+  )
+
+  (global_label "EN_5V_REG" (shape input) (at 228.6 63.5 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid "a1b2c3d4-0006-4000-8000-000000000006")
+  )
+
+  (global_label "PWR_BTN_GATE" (shape input) (at 228.6 101.6 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid "a1b2c3d4-0007-4000-8000-000000000007")
+  )
+
+  (global_label "USB_DP" (shape bidirectional) (at 228.6 114.3 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid "a1b2c3d4-0008-4000-8000-000000000008")
+  )
+
+  (global_label "USB_DM" (shape bidirectional) (at 228.6 127.0 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left))
+    (uuid "a1b2c3d4-0009-4000-8000-000000000009")
+  )
+
+  (sheet_instances
+    (path "/" (page "1"))
+  )
+)

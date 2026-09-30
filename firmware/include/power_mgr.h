@@ -18,6 +18,7 @@ extern "C" {
 
 // Power manager timing constants
 #define SHUTDOWN_GRACE_PERIOD_MS 45000 // 45 seconds for Linux OS clean halt before 5V rail cut
+#define POWER_CUT_MIN_OFF_MS     3000  // minimum time the rail stays off so the Pi 5 PMIC resets
 #define PWR_BTN_PULSE_MS         500   // 500 ms button press pulse for Pi 5 power button
 
 // Power state machine states

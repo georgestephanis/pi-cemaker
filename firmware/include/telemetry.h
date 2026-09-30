@@ -28,7 +28,7 @@ extern "C" {
 #define BATTERY_WARN_MV         6800 // ~3.40V per cell (~20% SoC)
 #define BATTERY_CRITICAL_MV     6200 // ~3.10V per cell (~5% SoC, initiates shutdown)
 #define BATTERY_CUTOFF_MV       6000 // 3.00V per cell (hardware cut-off limit)
-#define BATTERY_DESIGN_CAP_MAH  6000 // Nominal pack capacity (2x 3000mAh in series = 6000mAh equivalent energy calculation base)
+#define BATTERY_DESIGN_CAP_MAH  3000 // 2S1P of 3000 mAh cells: series cells share charge, so pack capacity is one cell's (about 22 Wh)
 
 // Telemetry state structure
 typedef struct {

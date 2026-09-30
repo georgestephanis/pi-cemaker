@@ -72,7 +72,7 @@ The HID report descriptor uses two standardized usage pages:
 |---|---|---|---|---|
 | `Byte 0` | **Report ID** | — | Constant | `0x02` |
 | `Bytes 1-2` | **ConfigVoltage** | `0x84, 0x40` | uint16_t | Nominal 2S battery pack voltage (7400 mV) |
-| `Bytes 3-4` | **DesignCapacity** | `0x85, 0x67` | uint16_t | Nominal pack capacity (6000 mAh equivalent) |
+| `Bytes 3-4` | **DesignCapacity** | `0x85, 0x67` | uint16_t | Nominal pack capacity (3000 mAh; 2S1P of 3000 mAh cells) |
 
 ---
 

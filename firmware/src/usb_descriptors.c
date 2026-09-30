@@ -71,7 +71,7 @@ const uint8_t hid_report_descriptor[] = {
     0x95, 0x01,       //   Report Count (1)
     0xB1, 0x02,       //   Feature (Data, Variable, Absolute)
     
-    // DesignCapacity (6000 mAh equivalent)
+    // DesignCapacity (3000 mAh)
     0x05, 0x85,       //   Usage Page (Battery System)
     0x09, 0x67,       //   Usage (DesignCapacity)
     0x15, 0x00,       //   Logical Minimum (0)

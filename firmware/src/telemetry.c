@@ -143,7 +143,7 @@ void telemetry_sample_tick(void) {
 
         // Estimate runtime: (Remaining mAh / Current mA) * 3600
         // Typical Pi 5 load ~ 2000mA
-        uint32_t rem_mah = ((uint32_t)s_telemetry.soc_pct * (BATTERY_DESIGN_CAP_MAH / 2)) / 100;
+        uint32_t rem_mah = ((uint32_t)s_telemetry.soc_pct * BATTERY_DESIGN_CAP_MAH) / 100;
         uint32_t load_ma = s_telemetry.current_out_ma > 500 ? s_telemetry.current_out_ma : 2000;
         s_telemetry.runtime_secs = (uint16_t)((rem_mah * 3600) / load_ma);
     }

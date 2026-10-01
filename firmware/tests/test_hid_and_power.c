@@ -116,8 +116,11 @@ void test_power_manager_state_machine(void) {
     telemetry_sim_set_ac(true);
     telemetry_sample_tick();
     power_mgr_tick(100);
+    TEST_ASSERT(power_mgr_get_state() == PWR_STATE_POWER_CUT,
+                "Rail stays off for a minimum time even when mains returns immediately");
+    power_mgr_tick(POWER_CUT_MIN_OFF_MS);
     TEST_ASSERT(power_mgr_get_state() == PWR_STATE_REBOOTING,
-                "State transitions to REBOOTING when wall power is reconnected");
+                "State transitions to REBOOTING once the minimum off time has elapsed");
 
     power_mgr_tick(100);
     TEST_ASSERT(power_mgr_get_state() == PWR_STATE_MAINS_CHARGING,
@@ -144,6 +147,37 @@ void test_manual_override(void) {
     TEST_ASSERT(!power_mgr_manual_cut_active(), "power_mgr_init clears a manual cut");
 }
 
+void test_mains_returns_during_countdown(void) {
+    printf("\n=== Test 5: Mains returning mid-countdown still power-cycles the Pi ===\n");
+
+    telemetry_init();
+    telemetry_sim_enable(true);
+    telemetry_sim_set_ac(false);
+    power_mgr_init();
+    telemetry_sim_set_soc(4);
+    telemetry_sample_tick();
+    power_mgr_tick(100);
+    power_mgr_tick(100);
+    TEST_ASSERT(power_mgr_get_state() == PWR_STATE_SHUTDOWN_PENDING, "Countdown started");
+
+    telemetry_sim_set_ac(true);
+    telemetry_sample_tick();
+    power_mgr_tick(20000);
+    TEST_ASSERT(power_mgr_get_state() == PWR_STATE_SHUTDOWN_PENDING,
+                "Countdown is not cancelled when mains returns");
+
+    power_mgr_tick(26000);
+    TEST_ASSERT(power_mgr_get_state() == PWR_STATE_POWER_CUT, "Rail is cut when countdown completes");
+    power_mgr_tick(POWER_CUT_MIN_OFF_MS);
+    TEST_ASSERT(power_mgr_get_state() == PWR_STATE_REBOOTING, "Rail is restored after the minimum off time");
+
+    printf("\n=== Test 6: CLI shutdown with mains present cycles the rail ===\n");
+    power_mgr_init();
+    power_mgr_request_clean_shutdown();
+    power_mgr_tick(100);
+    TEST_ASSERT(power_mgr_get_state() == PWR_STATE_SHUTDOWN_PENDING, "Requested shutdown is not cancelled by mains");
+}
+
 int main(void) {
     printf("====================================================\n");
     printf("  Running Pi-cemaker Firmware & HID Test Suite      \n");
@@ -153,6 +187,7 @@ int main(void) {
     test_telemetry_and_soc();
     test_power_manager_state_machine();
     test_manual_override();
+    test_mains_returns_during_countdown();
 
     printf("\n----------------------------------------------------\n");
     printf("Test Results: %d / %d tests passed (%.1f%%)\n",

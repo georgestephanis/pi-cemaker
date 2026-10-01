@@ -14,6 +14,7 @@ static uint32_t s_countdown_timer_ms = 0;
 static uint32_t s_pwr_btn_pulse_timer_ms = 0;
 static uint32_t s_led_blink_timer_ms = 0;
 static bool s_manual_cut = false;
+static uint32_t s_off_timer_ms = 0; // time the rail has been held off in POWER_CUT
 static bool s_led_toggle = false;
 
 static void set_gpio_output(unsigned int pin, bool high) {
@@ -171,30 +172,31 @@ void power_mgr_tick(uint32_t delta_ms) {
 
         case PWR_STATE_SHUTDOWN_PENDING:
             rail_set(true); // Keep 5.1V rail energized while Linux halts
-            if (t->ac_present) {
-                // Mains restored during countdown: cancel shutdown
-                s_pwr_state = PWR_STATE_MAINS_CHARGING;
+            // The OS has already been told to shut down and may be halted with 5V
+            // still applied, so the countdown always completes even if mains returns.
+            // The rail is then cycled so the Pi 5 PMIC cold-boots.
+            if (delta_ms >= s_countdown_timer_ms) {
                 s_countdown_timer_ms = 0;
+                s_off_timer_ms = 0;
+                s_pwr_state = PWR_STATE_POWER_CUT;
+                rail_set(false);
             } else {
-                if (delta_ms >= s_countdown_timer_ms) {
-                    // 45 seconds have passed; OS has halted. Cut 5V rail completely!
-                    s_countdown_timer_ms = 0;
-                    s_pwr_state = PWR_STATE_POWER_CUT;
-                    rail_set(false);
-                } else {
-                    s_countdown_timer_ms -= delta_ms;
-                }
+                s_countdown_timer_ms -= delta_ms;
             }
             break;
 
         case PWR_STATE_POWER_CUT:
             // 5V rail is CUT. Pi 5 PMIC is unpowered.
             rail_set(false);
+            s_off_timer_ms += delta_ms;
 
             if (t->ac_present) {
-                // Mains power has returned! Re-energize 5.1V rail to trigger cold-boot
-                s_pwr_state = PWR_STATE_REBOOTING;
-                rail_set(true);
+                // Mains is back, but hold the rail off long enough for the output caps
+                // to discharge and the PMIC to reset before re-energizing.
+                if (s_off_timer_ms >= POWER_CUT_MIN_OFF_MS) {
+                    s_pwr_state = PWR_STATE_REBOOTING;
+                    rail_set(true);
+                }
             } else if (t->v_bat_mv <= BATTERY_CUTOFF_MV) {
                 // Battery depleted to cutoff limit (6.0V). Enter dormant mode to prevent cell destruction
                 s_pwr_state = PWR_STATE_DORMANT_SLEEP;

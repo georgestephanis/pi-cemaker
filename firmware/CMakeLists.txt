@@ -47,40 +47,43 @@ else()
     message(STATUS "Pico SDK not active. Configuring host test target 'pi_cemaker_test'...")
 endif()
 
-# Host unit test and validation suite target (can be built on any host machine)
-add_executable(pi_cemaker_test
-    tests/test_hid_and_power.c
-    src/usb_descriptors.c
-    src/telemetry.c
-    src/power_mgr.c
-    src/cli.c
-)
+# Host targets are only configured without the Pico SDK (they need a hosted libc).
+if(NOT TARGET pico_stdlib)
+    # Host unit test and validation suite target (can be built on any host machine)
+    add_executable(pi_cemaker_test
+        tests/test_hid_and_power.c
+        src/usb_descriptors.c
+        src/telemetry.c
+        src/power_mgr.c
+        src/cli.c
+    )
 
-target_include_directories(pi_cemaker_test PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/include
-    ${CMAKE_CURRENT_LIST_DIR}/tests/mock
-)
+    target_include_directories(pi_cemaker_test PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/include
+        ${CMAKE_CURRENT_LIST_DIR}/tests/mock
+    )
 
-target_compile_definitions(pi_cemaker_test PRIVATE
-    PICO_ON_DEVICE=0
-    HOST_TEST=1
-)
+    target_compile_definitions(pi_cemaker_test PRIVATE
+        PICO_ON_DEVICE=0
+        HOST_TEST=1
+    )
 
-# Host interactive CLI runner
-add_executable(pi_cemaker_cli
-    tests/sim_cli_runner.c
-    src/usb_descriptors.c
-    src/telemetry.c
-    src/power_mgr.c
-    src/cli.c
-)
+    # Host interactive CLI runner
+    add_executable(pi_cemaker_cli
+        tests/sim_cli_runner.c
+        src/usb_descriptors.c
+        src/telemetry.c
+        src/power_mgr.c
+        src/cli.c
+    )
 
-target_include_directories(pi_cemaker_cli PRIVATE
-    ${CMAKE_CURRENT_LIST_DIR}/include
-    ${CMAKE_CURRENT_LIST_DIR}/tests/mock
-)
+    target_include_directories(pi_cemaker_cli PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/include
+        ${CMAKE_CURRENT_LIST_DIR}/tests/mock
+    )
 
-target_compile_definitions(pi_cemaker_cli PRIVATE
-    PICO_ON_DEVICE=0
-    HOST_TEST=1
-)
+    target_compile_definitions(pi_cemaker_cli PRIVATE
+        PICO_ON_DEVICE=0
+        HOST_TEST=1
+    )
+endif()

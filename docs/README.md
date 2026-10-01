@@ -61,7 +61,7 @@ All design documentation lives in this `docs/` folder:
 2. [**Hardware Design & Schematics (`docs/HARDWARE_DESIGN.md`)**](HARDWARE_DESIGN.md) — Component selection (Integrated vs Discrete), schematic design guidelines, battery clips, thermal considerations, and BOM.
 3. [**USB HID UPS Specification (`docs/USB_HID_UPS_SPEC.md`)**](USB_HID_UPS_SPEC.md) — USB HID Power Device (`0x84`) & Battery System (`0x85`) descriptor layout, Linux `upower`/`NUT` integration, and auto-shutdown sequences.
 4. [**Firmware Roadmap (`docs/FIRMWARE_ROADMAP.md`)**](FIRMWARE_ROADMAP.md) — Firmware architecture, TinyUSB stack setup, ADC filtering, state estimation, and test harness.
-5. [**Critical Considerations & Edge Cases (`docs/CRITICAL_CONSIDERATIONS.md`)**](CRITICAL_CONSIDERATIONS.md) — The "zombie halt" reboot fix, RPi 5 `config.txt` requirements, reverse-polarity protection, 2S balancing, and dormant deep sleep.
+5. [**Critical Considerations & Edge Cases (`docs/CRITICAL_CONSIDERATIONS.md`)**](CRITICAL_CONSIDERATIONS.md) — The "zombie halt" and power-button wake, RPi 5 `config.txt` requirements, reverse-polarity protection, 2S balancing, and dormant deep sleep.
 
 ---
 

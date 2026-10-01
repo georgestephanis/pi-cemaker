@@ -52,14 +52,14 @@ This document outlines the software architecture, toolchain, state machine, and 
 
 ## 3. Development Milestones
 
-### Phase 1: USB HID UPS & Core Firmware Implementation (Completed ✅)
+### Phase 1: USB HID UPS & Core Firmware Implementation (host simulation only; not run on RP2040)
 - **Goal:** USB-IF HID Power Device and CDC serial interface with full state machine and desktop simulation.
 - **Completed Actions:**
   - Implemented TinyUSB HID Power Device descriptor (`0x84`/`0x85`) and composite CDC ACM.
   - Implemented software simulation engine for automated battery discharge/recharge and AC loss testing.
-  - Implemented 45-second zombie halt mitigation state machine in `power_mgr.c`.
+  - Implemented a 45-second shutdown countdown, HALTED state and power-button wake in `power_mgr.c` (host-simulated only).
   - Implemented interactive CDC CLI (`status`, `sim`, `shutdown`, `powercut`, `pulse-pwr`, `reboot-bootloader`).
-  - Implemented unit test suite (`test_hid_and_power.c`) passing 22/22 tests on host.
+  - Implemented unit test suite (`test_hid_and_power.c`) passing 29/29 tests on host (mock TinyUSB; the device build is unverified).
   - See [`firmware/README.md`](../firmware/README.md) for build and simulation details.
 
 ### Phase 2: Sensor & Hardware Telemetry (In Progress 🟡)

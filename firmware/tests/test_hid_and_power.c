@@ -65,7 +65,7 @@ void test_telemetry_and_soc(void) {
 }
 
 void test_power_manager_state_machine(void) {
-    printf("\n=== Test 3: Power Management State Machine & Zombie Halt Prevention ===\n");
+    printf("\n=== Test 3: Power Management State Machine (shutdown countdown, halt, wake by power button) ===\n");
 
     telemetry_init();
     power_mgr_init();
@@ -107,24 +107,17 @@ void test_power_manager_state_machine(void) {
     TEST_ASSERT(power_mgr_get_state() == PWR_STATE_SHUTDOWN_PENDING,
                 "State remains SHUTDOWN_PENDING during 45s countdown (5V rail preserved)");
 
-    // Advance timer past 45 seconds: 5V rail must be CUT to prevent zombie halt
+    // Advance past 45 seconds: Pi should be halted; rail stays ON (no cut)
     power_mgr_tick(16000);
-    TEST_ASSERT(power_mgr_get_state() == PWR_STATE_POWER_CUT,
-                "State transitions to POWER_CUT after 45s (5V rail turned off)");
+    TEST_ASSERT(power_mgr_get_state() == PWR_STATE_HALTED,
+                "State transitions to HALTED after 45s");
 
-    // Mains power returns! Pi-cemaker must restore 5V rail and trigger auto cold-boot
+    // Mains returns: Pi power button is pressed to boot it
     telemetry_sim_set_ac(true);
     telemetry_sample_tick();
     power_mgr_tick(100);
-    TEST_ASSERT(power_mgr_get_state() == PWR_STATE_POWER_CUT,
-                "Rail stays off for a minimum time even when mains returns immediately");
-    power_mgr_tick(POWER_CUT_MIN_OFF_MS);
-    TEST_ASSERT(power_mgr_get_state() == PWR_STATE_REBOOTING,
-                "State transitions to REBOOTING once the minimum off time has elapsed");
-
-    power_mgr_tick(100);
     TEST_ASSERT(power_mgr_get_state() == PWR_STATE_MAINS_CHARGING,
-                "State returns to MAINS_CHARGING after cold-boot power cycle");
+                "State returns to MAINS_CHARGING when mains returns");
 }
 
 void test_manual_override(void) {
@@ -167,9 +160,9 @@ void test_mains_returns_during_countdown(void) {
                 "Countdown is not cancelled when mains returns");
 
     power_mgr_tick(26000);
-    TEST_ASSERT(power_mgr_get_state() == PWR_STATE_POWER_CUT, "Rail is cut when countdown completes");
-    power_mgr_tick(POWER_CUT_MIN_OFF_MS);
-    TEST_ASSERT(power_mgr_get_state() == PWR_STATE_REBOOTING, "Rail is restored after the minimum off time");
+    TEST_ASSERT(power_mgr_get_state() == PWR_STATE_HALTED, "Countdown completes, then HALTED");
+    power_mgr_tick(100);
+    TEST_ASSERT(power_mgr_get_state() == PWR_STATE_MAINS_CHARGING, "Power button pulse issued; back to normal");
 
     printf("\n=== Test 6: CLI shutdown with mains present cycles the rail ===\n");
     power_mgr_init();

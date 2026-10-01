@@ -17,8 +17,7 @@ extern "C" {
 #define PIN_USER_BTN            19 // Momentary push button (active LOW with pull-up)
 
 // Power manager timing constants
-#define SHUTDOWN_GRACE_PERIOD_MS 45000 // 45 seconds for Linux OS clean halt before 5V rail cut
-#define POWER_CUT_MIN_OFF_MS     3000  // minimum time the rail stays off so the Pi 5 PMIC resets
+#define SHUTDOWN_GRACE_PERIOD_MS 45000 // time allowed for Linux to halt after ShutdownImminent
 #define PWR_BTN_PULSE_MS         500   // 500 ms button press pulse for Pi 5 power button
 
 // Power state machine states
@@ -29,9 +28,7 @@ typedef enum {
     PWR_STATE_BATTERY_DISCHARGING,  // Mains AC absent, running on 2S battery, 5V rail ON
     PWR_STATE_BATTERY_LOW,          // Mains absent, battery < 20%, 5V rail ON, warning flag set
     PWR_STATE_SHUTDOWN_PENDING,     // Battery < 5%, ShutdownImminent asserted, 45s countdown active
-    PWR_STATE_POWER_CUT,            // 45s expired: 5V rail CUT to kill PMIC "zombie halt" drain (~1.5-2W)
-    PWR_STATE_DORMANT_SLEEP,        // Battery < 6.0V cutoff: RP2040 dormant sleep (<100uA) until AC returns
-    PWR_STATE_REBOOTING             // AC restored: 5V rail re-energized, cold-booting Pi 5
+    PWR_STATE_HALTED                // Countdown done; Pi halted, rail on, waiting for mains to press its power button
 } power_state_t;
 
 // API functions

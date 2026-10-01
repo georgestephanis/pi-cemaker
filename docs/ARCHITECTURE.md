@@ -99,7 +99,7 @@ The RP2040 is the central nerve center for Pi-cemaker:
  [ADC2 / GPIO28]      ◀─────│ Output Voltage Sense (V_OUT)   │
  [ADC3 / GPIO29]      ◀─────│ NTC Thermistor Sense (TEMP)     │
                             │                                 │
- [GPIO15 Output]      ──────▶│ 5V Rail Enable / Power Cycle   │
+ [GPIO15 Output]      ──────▶│ 5V Rail Enable (fail-on)       │
  [GPIO14 Output]      ──────▶│ Pi 5 Power Button (Open-Drain) │
  [GPIO16/17/18 Out]   ──────▶│ Status LEDs (Power, Bat, Fault)│
                             │                                 │

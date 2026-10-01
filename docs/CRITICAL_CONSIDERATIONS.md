@@ -9,7 +9,7 @@ This document details the real-world operational edge cases, hardware quirks, an
 
 ---
 
-## 1. The "Zombie Halt" State & Cold-Boot Power Cycling
+## 1. The "Zombie Halt" State & Waking the Pi
 
 ### The Problem
 When the UPS signals a low battery, the Raspberry Pi OS executes an orderly shutdown:
@@ -17,16 +17,17 @@ When the UPS signals a low battery, the Raspberry Pi OS executes an orderly shut
 2. The Linux kernel halts the processor.
 3. **The Trap:** In the halt state, the Raspberry Pi 5 PMIC remains energized, continuously drawing **~1.5W to 2.0W** from the 5V rail.
    - If the UPS continues supplying power, the battery will be drained completely to the BMS cutoff point.
-   - More critically: **When mains wall power returns, the Raspberry Pi 5 will NOT turn back on automatically** if its 5V rail never dropped. It remains frozen in the halted state.
+   - More critically: **When mains wall power returns, the Raspberry Pi 5 will NOT turn back on automatically** if its 5V rail never dropped, so something must press its power button.
 
-### The Solution: Post-Shutdown Power Cut Sequence
+### The Solution: Wake by Power-Button Pulse (revised, issue #13)
+Cutting the 5 V rail was replaced by waking the Pi through its power button. Not yet tested on hardware.
 1. **Signal:** Pi-cemaker asserts `ShutdownImminent = 1` over USB HID.
-2. **Timer Window:** Pi-cemaker starts a non-blocking **45-second countdown** (ample time for Linux to halt cleanly).
-3. **Power Cut:** After 45 seconds, the RP2040 drives `PIN_5V_EN` (`GPIO15`) LOW, cutting 5.1V power to the Pi 5 completely.
-4. **Auto-Reboot on Mains Return:** When wall power returns:
-   - The RP2040 detects `V_BUS_IN > 7.5V`.
-   - The RP2040 drives `PIN_5V_EN` (`GPIO15`) HIGH.
-   - 5.1V power is restored to the Pi 5 PMIC, prompting a clean cold-boot automatically.
+2. **Timer Window:** a non-blocking **45-second countdown** gives Linux time to halt. It always completes, even if mains returns meanwhile.
+3. **Halted:** the state becomes `HALTED` and the 5 V rail **stays on**.
+4. **Wake on mains return:** the RP2040 sees `V_BUS_IN > 7.5V` and pulses `PWR_BTN` (`GPIO14` -> `Q6` -> `J4`) for ~500 ms, which wakes a halted Pi 5.
+5. **Recommended Pi setting:** `POWER_OFF_ON_HALT=1` in the bootloader EEPROM puts the PMIC in standby when halted, cutting the 1.5–2 W halted draw (verify on your board).
+
+**Known risk:** if the pulse fires before the Pi has actually halted, it can trigger a shutdown instead. Safe halt detection needs load-current sensing.
 
 ### Hardware Wake Option: RPi 5 `PWR_BTN` / `GLOBAL_EN` Header
 The Raspberry Pi 5 includes a dedicated 2-pin JST-SH power button header (adjacent to the physical power button).
@@ -78,7 +79,10 @@ When users insert two loose 18650 cells, they may have different capacities, cyc
 
 ---
 
-## 5. Quiescent Current & RP2040 Dormant Sleep
+## 5. Quiescent Current & Deep Discharge (dormant sleep removed)
+
+> [!NOTE]
+> The firmware no longer implements dormant sleep (issue #3): the <100 µA figure is not reachable with the current dividers/hardware, and the 2S BMS disconnects the pack at its overdischarge threshold. The text below is the original rationale, kept for reference.
 
 ### The Danger of Deep Parasitic Drain
 If mains power is lost while a node is unattended for days, the battery will discharge to its 6.0V cutoff:

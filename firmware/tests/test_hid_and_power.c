@@ -124,6 +124,26 @@ void test_power_manager_state_machine(void) {
                 "State returns to MAINS_CHARGING after cold-boot power cycle");
 }
 
+void test_manual_override(void) {
+    printf("\n=== Test 4: Manual 5V cut is not overwritten by the state machine ===\n");
+
+    telemetry_init();
+    telemetry_sim_enable(true);
+    telemetry_sim_set_ac(true);
+    power_mgr_init();
+
+    power_mgr_force_5v_enable(false);
+    for (int i = 0; i < 10; i++) power_mgr_tick(10);
+    TEST_ASSERT(power_mgr_manual_cut_active(), "Manual cut persists across state machine ticks");
+
+    power_mgr_force_5v_enable(true);
+    TEST_ASSERT(!power_mgr_manual_cut_active(), "Re-enabling returns control to the state machine");
+
+    power_mgr_force_5v_enable(false);
+    power_mgr_init();
+    TEST_ASSERT(!power_mgr_manual_cut_active(), "power_mgr_init clears a manual cut");
+}
+
 int main(void) {
     printf("====================================================\n");
     printf("  Running Pi-cemaker Firmware & HID Test Suite      \n");
@@ -132,6 +152,7 @@ int main(void) {
     test_descriptor_structure();
     test_telemetry_and_soc();
     test_power_manager_state_machine();
+    test_manual_override();
 
     printf("\n----------------------------------------------------\n");
     printf("Test Results: %d / %d tests passed (%.1f%%)\n",

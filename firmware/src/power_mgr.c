@@ -13,6 +13,7 @@ static power_state_t s_pwr_state = PWR_STATE_INIT;
 static uint32_t s_countdown_timer_ms = 0;
 static uint32_t s_pwr_btn_pulse_timer_ms = 0;
 static uint32_t s_led_blink_timer_ms = 0;
+static bool s_manual_cut = false;
 static bool s_led_toggle = false;
 
 static void set_gpio_output(unsigned int pin, bool high) {
@@ -55,13 +56,31 @@ void power_mgr_init(void) {
     gpio_pull_up(PIN_USER_BTN);
 #endif
 
+    s_manual_cut = false;
     s_pwr_state = PWR_STATE_MAINS_CHARGING;
     s_countdown_timer_ms = 0;
 }
 
-void power_mgr_force_5v_enable(bool enable) {
+static void rail_write(bool enable) {
     set_gpio_output(PIN_5V_EN, enable);
     set_gpio_output(PIN_LED_PWR, enable);
+}
+
+// Used by the state machine. Ignored while a manual cut is in force.
+static void rail_set(bool enable) {
+    if (s_manual_cut) return;
+    rail_write(enable);
+}
+
+// Manual control (CLI). Cutting the rail holds it off against the state machine
+// until the rail is manually re-enabled; enabling returns control to automatic.
+void power_mgr_force_5v_enable(bool enable) {
+    s_manual_cut = !enable;
+    rail_write(enable);
+}
+
+bool power_mgr_manual_cut_active(void) {
+    return s_manual_cut;
 }
 
 void power_mgr_pulse_pi_power_button(void) {
@@ -124,7 +143,7 @@ void power_mgr_tick(uint32_t delta_ms) {
         case PWR_STATE_INIT:
         case PWR_STATE_MAINS_CHARGING:
         case PWR_STATE_MAINS_FULL:
-            power_mgr_force_5v_enable(true);
+            rail_set(true);
             if (!t->ac_present) {
                 // AC power lost: switchover to battery discharge
                 s_pwr_state = t->low_battery_warn ? PWR_STATE_BATTERY_LOW : PWR_STATE_BATTERY_DISCHARGING;
@@ -137,7 +156,7 @@ void power_mgr_tick(uint32_t delta_ms) {
 
         case PWR_STATE_BATTERY_DISCHARGING:
         case PWR_STATE_BATTERY_LOW:
-            power_mgr_force_5v_enable(true);
+            rail_set(true);
             if (t->ac_present) {
                 // Mains restored
                 s_pwr_state = PWR_STATE_MAINS_CHARGING;
@@ -151,7 +170,7 @@ void power_mgr_tick(uint32_t delta_ms) {
             break;
 
         case PWR_STATE_SHUTDOWN_PENDING:
-            power_mgr_force_5v_enable(true); // Keep 5.1V rail energized while Linux halts
+            rail_set(true); // Keep 5.1V rail energized while Linux halts
             if (t->ac_present) {
                 // Mains restored during countdown: cancel shutdown
                 s_pwr_state = PWR_STATE_MAINS_CHARGING;
@@ -161,7 +180,7 @@ void power_mgr_tick(uint32_t delta_ms) {
                     // 45 seconds have passed; OS has halted. Cut 5V rail completely!
                     s_countdown_timer_ms = 0;
                     s_pwr_state = PWR_STATE_POWER_CUT;
-                    power_mgr_force_5v_enable(false);
+                    rail_set(false);
                 } else {
                     s_countdown_timer_ms -= delta_ms;
                 }
@@ -170,12 +189,12 @@ void power_mgr_tick(uint32_t delta_ms) {
 
         case PWR_STATE_POWER_CUT:
             // 5V rail is CUT. Pi 5 PMIC is unpowered.
-            power_mgr_force_5v_enable(false);
+            rail_set(false);
 
             if (t->ac_present) {
                 // Mains power has returned! Re-energize 5.1V rail to trigger cold-boot
                 s_pwr_state = PWR_STATE_REBOOTING;
-                power_mgr_force_5v_enable(true);
+                rail_set(true);
             } else if (t->v_bat_mv <= BATTERY_CUTOFF_MV) {
                 // Battery depleted to cutoff limit (6.0V). Enter dormant mode to prevent cell destruction
                 s_pwr_state = PWR_STATE_DORMANT_SLEEP;
@@ -184,12 +203,12 @@ void power_mgr_tick(uint32_t delta_ms) {
 
         case PWR_STATE_REBOOTING:
             // Brief stabilization period before returning to normal charging state
-            power_mgr_force_5v_enable(true);
+            rail_set(true);
             s_pwr_state = PWR_STATE_MAINS_CHARGING;
             break;
 
         case PWR_STATE_DORMANT_SLEEP:
-            power_mgr_force_5v_enable(false);
+            rail_set(false);
             set_gpio_output(PIN_LED_PWR, 0);
             set_gpio_output(PIN_LED_BAT, 0);
             set_gpio_output(PIN_LED_FAULT, 0);

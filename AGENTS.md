@@ -8,7 +8,7 @@ Pi-cemaker is a prototype 2S (2× 18650) UPS for the Raspberry Pi 5, with an RP2
 
 | Area | Reality |
 |---|---|
-| Firmware (`firmware/`) | Runs on the host as a simulator; 22 tests pass against a **mock** TinyUSB. The real RP2040 build has **never been built**. No I2C, no temperature read, fake current values, dormant sleep is a stub. |
+| Firmware (`firmware/`) | Runs on the host as a simulator; 29 tests pass against a **mock** TinyUSB. The real RP2040 build has **never been built**. No I2C, no temperature read, fake current values, dormant sleep was removed. |
 | Hardware docs (`hardware/*.md`) | Prose and ASCII art. No netlist. Several claims are wrong (see the issue list). |
 | KiCad (`hardware/kicad/`) | Stub: outline and labels only. Probably does not open (`;` comments in `.kicad_pcb`). |
 | Docs (`docs/`) | Aspirational. Some say "implemented" for things that are not. |
@@ -81,7 +81,7 @@ There is no CI, no linter config, and no KiCad ERC/DRC yet. `kicad-cli` is not i
 1. 3–4 A vs 5 A output, and what the Pi sees on its USB-C port (#7).
 2. Plain buck vs buck-boost for 5 V.
 3. Primary data link: USB-A host port (zero config) vs USB-C with the dwc2 overlay (#6).
-4. Zombie halt: rail cut vs `POWER_OFF_ON_HALT=1` + PWR_BTN pulse (#13).
+4. Zombie halt: implemented as PWR_BTN pulse (#13); needs hardware validation and a safe "halted" detector.
 5. One charger part: MP2762A (NVDC) vs alternatives.
 
 ## 7. References

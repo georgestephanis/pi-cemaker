@@ -38,7 +38,7 @@ typedef struct __attribute__((packed)) {
 typedef struct __attribute__((packed)) {
     uint8_t report_id;          // REPORT_ID_UPS_CONFIG (0x02)
     uint16_t config_voltage_mv; // Nominal voltage: 7400 mV (0x84, 0x40)
-    uint16_t design_capacity_mah; // Design capacity: 6000 mAh (0x85, 0x67)
+    uint16_t design_capacity_mah; // Design capacity: 3000 mAh (0x85, 0x67)
 } hid_ups_config_report_t;
 
 // Configuration descriptor endpoint numbers

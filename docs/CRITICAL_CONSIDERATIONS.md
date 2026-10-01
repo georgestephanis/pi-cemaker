@@ -41,10 +41,8 @@ The Raspberry Pi 5 includes a dedicated 2-pin JST-SH power button header (adjace
 The USB-C power port on the Raspberry Pi 5 is wired to an internal Synopsys DWC2 USB controller. By default in standard Raspberry Pi OS, this port does not run in USB Host mode.
 
 ### Configuration Requirement
-To allow the single USB-C cable to supply both power and USB HID UPS communication, the user must enable Host mode by adding one line to `/boot/firmware/config.txt`:
-```ini
-otg_mode=1
-```
+> [!WARNING]
+> Unverified and under review (issue #6). `otg_mode=1` is older Pi 4-era guidance. Raspberry Pi's current OTG whitepaper uses the dwc2 overlay (`dtoverlay=dwc2,dr_mode=...`), and the Pi 5 has no OTG_ID line, so the role must be forced. Here the Pi must be the **host** (the UPS is the USB device). Confirm the exact host-mode syntax on a real Pi 5 before documenting it for users. This also means the single-cable path is **not** zero-config; the auxiliary cable (J3) into a USB-A host port is.
 
 ### Hardware Fallback / Alternative Host Link
 Not all users want to edit `config.txt` (or they may be running specialized appliances like LibreELEC or bare-metal hypervisors).

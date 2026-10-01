@@ -172,8 +172,8 @@ Carries both 5.1V/5A power and native USB 2.0 D+/D- bidirectional communication 
   GND  (A1, A12, B1, B12) ──[ System GND ]──────────────▶ GND
   D+   (A6, B6) ───────────[ RP2040 USB_DP via 27Ω ]─────▶ D+ (USB HID UPS + CDC)
   D-   (A7, B7) ───────────[ RP2040 USB_DM via 27Ω ]─────▶ D- (USB HID UPS + CDC)
-  CC1  (A5) ───────────────[ 10kΩ Pull-Up to 5V ]────────▶ CC1 (Signals 3A/5A Source)
-  CC2  (B5) ───────────────[ 10kΩ Pull-Up to 5V ]────────▶ CC2 (Signals 3A/5A Source)
+  CC1  (A5) ───────────────[ 10kΩ Pull-Up to 5V ]────────▶ CC1 (10k Rp = 3A source; 5A needs PD)
+  CC2  (B5) ───────────────[ 10kΩ Pull-Up to 5V ]────────▶ CC2 (10k Rp = 3A source; 5A needs PD)
 
 [Auxiliary Header: J3 (JST-SH 4-pin)]
   Pin 1: GND | Pin 2: USB_DP | Pin 3: USB_DM | Pin 4: VBUS_SENSE
@@ -186,7 +186,7 @@ Carries both 5.1V/5A power and native USB 2.0 D+/D- bidirectional communication 
 ### Component Details
 - **USB-C Output Receptacle (J2):** High-current 16-pin / 24-pin USB-C connector rated for 5A continuous.
 - **CC Pin Configuration:**
-  - $10\,\text{k}\Omega$ 1% pull-up resistors to 5.0V on CC1 and CC2. This advertises the maximum standard Type-C current capability to the Pi 5.
+  - $10\,\text{k}\Omega$ 1% pull-up resistors to 5.0V on CC1 and CC2. A 10 kΩ Rp to 5 V advertises a **3 A** source (verify against the USB Type-C spec Rp table); 5 A is only signalled through USB PD and needs an e-marked cable. Without a 5 V/5 A PDO the Raspberry Pi 5 limits its USB ports to 600 mA unless `usb_max_current_enable=1` (config.txt) or `PSU_MAX_CURRENT=5000` (EEPROM) is set. See issue #7.
 - **USB Data Line Protection (ESD1, ESD2):**
   - Ultra-low capacitance ($< 0.5\,\text{pF}$) TVS array (e.g. `USBLC6-2SC6`) on D+ and D- lines.
   - $27\,\Omega$ series termination resistors between RP2040 USB pins and J2.

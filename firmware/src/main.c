@@ -152,7 +152,7 @@ uint16_t tud_hid_get_report_cb(uint8_t instance, uint8_t report_id,
         hid_ups_config_report_t config;
         config.report_id = REPORT_ID_UPS_CONFIG;
         config.config_voltage_mv = BATTERY_NOMINAL_MV; // 7400 mV
-        config.design_capacity_mah = BATTERY_DESIGN_CAP_MAH; // 6000 mAh
+        config.design_capacity_mah = BATTERY_DESIGN_CAP_MAH; // 3000 mAh
 
         uint16_t copy_len = (reqlen < sizeof(config)) ? reqlen : sizeof(config);
         memcpy(buffer, &config, copy_len);

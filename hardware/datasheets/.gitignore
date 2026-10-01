@@ -1,0 +1,3 @@
+*.pdf
+*.txt
+!fetch.sh

@@ -5,8 +5,6 @@
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 #include "hardware/sync.h"
-#include "hardware/rosc.h"
-#include "hardware/clocks.h"
 #endif
 
 static power_state_t s_pwr_state = PWR_STATE_INIT;
@@ -14,7 +12,6 @@ static uint32_t s_countdown_timer_ms = 0;
 static uint32_t s_pwr_btn_pulse_timer_ms = 0;
 static uint32_t s_led_blink_timer_ms = 0;
 static bool s_manual_cut = false;
-static uint32_t s_off_timer_ms = 0; // time the rail has been held off in POWER_CUT
 static bool s_led_toggle = false;
 
 static void set_gpio_output(unsigned int pin, bool high) {
@@ -90,7 +87,7 @@ void power_mgr_pulse_pi_power_button(void) {
 }
 
 void power_mgr_request_clean_shutdown(void) {
-    if (s_pwr_state != PWR_STATE_SHUTDOWN_PENDING && s_pwr_state != PWR_STATE_POWER_CUT) {
+    if (s_pwr_state != PWR_STATE_SHUTDOWN_PENDING && s_pwr_state != PWR_STATE_HALTED) {
         s_pwr_state = PWR_STATE_SHUTDOWN_PENDING;
         s_countdown_timer_ms = SHUTDOWN_GRACE_PERIOD_MS;
     }
@@ -108,9 +105,7 @@ const char* power_mgr_get_state_str(power_state_t state) {
         case PWR_STATE_BATTERY_DISCHARGING: return "BATTERY_DISCHARGING";
         case PWR_STATE_BATTERY_LOW:         return "BATTERY_LOW";
         case PWR_STATE_SHUTDOWN_PENDING:    return "SHUTDOWN_COUNTDOWN";
-        case PWR_STATE_POWER_CUT:           return "POWER_CUT_ZOMBIE_PREVENTION";
-        case PWR_STATE_DORMANT_SLEEP:       return "DORMANT_DEEP_SLEEP";
-        case PWR_STATE_REBOOTING:           return "AUTO_REBOOTING";
+        case PWR_STATE_HALTED:              return "HALTED_WAITING_FOR_MAINS";
         default:                            return "UNKNOWN";
     }
 }
@@ -171,61 +166,31 @@ void power_mgr_tick(uint32_t delta_ms) {
             break;
 
         case PWR_STATE_SHUTDOWN_PENDING:
-            rail_set(true); // Keep 5.1V rail energized while Linux halts
-            // The OS has already been told to shut down and may be halted with 5V
-            // still applied, so the countdown always completes even if mains returns.
-            // The rail is then cycled so the Pi 5 PMIC cold-boots.
+            rail_set(true); // Keep the rail on while Linux halts
+            // The OS has been told to shut down, so always let the countdown finish,
+            // even if mains returns. The rail is NOT cut: the Pi 5 is woken by its
+            // power button, which also avoids the halted-PMIC draw when the user sets
+            // POWER_OFF_ON_HALT=1 (issue #13).
             if (delta_ms >= s_countdown_timer_ms) {
                 s_countdown_timer_ms = 0;
-                s_off_timer_ms = 0;
-                s_pwr_state = PWR_STATE_POWER_CUT;
-                rail_set(false);
+                s_pwr_state = PWR_STATE_HALTED;
             } else {
                 s_countdown_timer_ms -= delta_ms;
             }
             break;
 
-        case PWR_STATE_POWER_CUT:
-            // 5V rail is CUT. Pi 5 PMIC is unpowered.
-            rail_set(false);
-            s_off_timer_ms += delta_ms;
-
-            if (t->ac_present) {
-                // Mains is back, but hold the rail off long enough for the output caps
-                // to discharge and the PMIC to reset before re-energizing.
-                if (s_off_timer_ms >= POWER_CUT_MIN_OFF_MS) {
-                    s_pwr_state = PWR_STATE_REBOOTING;
-                    rail_set(true);
-                }
-            } else if (t->v_bat_mv <= BATTERY_CUTOFF_MV) {
-                // Battery depleted to cutoff limit (6.0V). Enter dormant mode to prevent cell destruction
-                s_pwr_state = PWR_STATE_DORMANT_SLEEP;
-            }
-            break;
-
-        case PWR_STATE_REBOOTING:
-            // Brief stabilization period before returning to normal charging state
+        case PWR_STATE_HALTED:
             rail_set(true);
-            s_pwr_state = PWR_STATE_MAINS_CHARGING;
-            break;
-
-        case PWR_STATE_DORMANT_SLEEP:
-            rail_set(false);
-            set_gpio_output(PIN_LED_PWR, 0);
-            set_gpio_output(PIN_LED_BAT, 0);
-            set_gpio_output(PIN_LED_FAULT, 0);
-#if defined(PICO_ON_DEVICE) && PICO_ON_DEVICE
-            // On RP2040, shut down clocks and sleep until VBUS edge or button
-            // rosc_set_dormant();
-#endif
             if (t->ac_present) {
-                s_pwr_state = PWR_STATE_REBOOTING;
+                // Mains is back: press the Pi's power button once to boot it.
+                power_mgr_pulse_pi_power_button();
+                s_pwr_state = PWR_STATE_MAINS_CHARGING;
             }
             break;
     }
 
     // 4. Update status LEDs according to state
-    if (s_pwr_state != PWR_STATE_DORMANT_SLEEP) {
+    {
         if (s_pwr_state == PWR_STATE_MAINS_CHARGING) {
             set_gpio_output(PIN_LED_BAT, s_led_toggle); // Slow blink
             set_gpio_output(PIN_LED_FAULT, 0);
@@ -237,8 +202,8 @@ void power_mgr_tick(uint32_t delta_ms) {
             set_gpio_output(PIN_LED_FAULT, 0);
         } else if (s_pwr_state == PWR_STATE_BATTERY_LOW || s_pwr_state == PWR_STATE_SHUTDOWN_PENDING) {
             set_gpio_output(PIN_LED_FAULT, s_led_toggle); // Fast blink warning
-        } else if (s_pwr_state == PWR_STATE_POWER_CUT) {
-            set_gpio_output(PIN_LED_FAULT, 1); // Solid fault / halted
+        } else if (s_pwr_state == PWR_STATE_HALTED) {
+            set_gpio_output(PIN_LED_FAULT, 1); // Solid: Pi halted, waiting for mains
         }
     }
 }

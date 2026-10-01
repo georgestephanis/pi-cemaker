@@ -28,7 +28,7 @@ firmware/
 │   ├── tusb_config.h           # TinyUSB configuration (HID + CDC)
 │   ├── usb_descriptors.h       # HID Power Device report structures & endpoint defs
 │   ├── telemetry.h             # ADC definitions, SoC calculations, and simulation hooks
-│   ├── power_mgr.h             # State machine, GPIOs, and 45s zombie mitigation
+│   ├── power_mgr.h             # State machine, GPIOs, and 45s shutdown countdown and wake-by-power-button
 │   └── cli.h                   # CDC serial command-line interface
 ├── src/
 │   ├── main.c                  # Core 0 & Core 1 scheduling, TinyUSB callbacks
@@ -55,7 +55,7 @@ cd firmware
 cmake -B build -S .
 cmake --build build
 
-# Run unit tests (verifies HID descriptors, SoC table, and 45s zombie prevention)
+# Run unit tests (verifies HID descriptors, SoC table, and the shutdown/wake state machine)
 ./build/pi_cemaker_test
 
 # Run interactive CLI simulator

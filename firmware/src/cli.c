@@ -92,7 +92,7 @@ static void handle_command(char* cmd) {
         cli_puts("  sim ac <0|1>      - Simulate AC power loss (0) or connect (1)\r\n");
         cli_puts("  sim soc <0-100>   - Set simulated battery charge percentage\r\n");
         cli_puts("  shutdown          - Initiate clean OS shutdown sequence (45s window)\r\n");
-        cli_puts("  powercut          - Force immediate 5V rail cut (test zombie mitigation)\r\n");
+        cli_puts("  powercut          - Force immediate 5V rail cut (test/debug)\r\n");
         cli_puts("  poweron           - Force 5V rail enable\r\n");
         cli_puts("  pulse-pwr         - Pulse Pi 5 hardware power button line\r\n");
         cli_puts("  reboot-bootloader - Reboot RP2040 into USB mass-storage bootloader\r\n");

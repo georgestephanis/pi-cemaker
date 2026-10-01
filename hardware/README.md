@@ -80,4 +80,5 @@ This directory contains the electrical circuit designs, schematics, Bill of Mate
 1. [**Circuit Schematics & Subsystems (`SCHEMATICS.md`)**](SCHEMATICS.md) — Detailed schematic design, component ratings, formulas, and pin connections.
 2. [**Bill of Materials (`BOM.md`)**](BOM.md) / [**BOM (CSV)**](BOM.csv) — Complete BOM with MPNs, manufacturers, footprints, and distributor part numbers.
 3. [**PCB Layout Guidelines (`PCB_LAYOUT_GUIDELINES.md`)**](PCB_LAYOUT_GUIDELINES.md) — 4-layer stackup, 5A trace sizing, thermal vias, and decoupling layout.
-4. [**KiCad Project Files (`kicad/`)**](kicad/) — KiCad 7/8 project files, schematic sheets, and board layout.
+4. [**Modular proof of concept (`POC_MODULAR.md`)**](POC_MODULAR.md) — hand-solderable first build from commercial modules.
+5. [**KiCad Project Files (`kicad/`)**](kicad/) — KiCad 7/8 project files, schematic sheets, and board layout.

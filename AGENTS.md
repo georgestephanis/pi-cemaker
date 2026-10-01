@@ -1,69 +1,89 @@
 # AGENTS.md — Pi-cemaker
 
-This document provides operational context, architectural reference, build procedures, and coding guidelines for AI coding agents and developers working in this repository.
+Guidance for AI agents and developers. Read **Status** first: most docs describe intent, not what exists.
 
----
+## 1. Status (read this first)
 
-## 1. Project Overview & Architecture
+Pi-cemaker is a prototype 2S (2× 18650) UPS for the Raspberry Pi 5, with an RP2040 that presents a USB HID Power Device plus CDC serial.
 
-**Pi-cemaker** is an open-source, minimalist 2× 18650 DC Uninterruptible Power Supply (UPS) for Raspberry Pi 5:
-- **Battery Subsystem:** 2S1P Li-ion (2× 18650 cells, 7.4V nominal, 8.4V max charge, 6.0V cutoff) with hardware protection (HY2120-LB).
-- **Power Path:** Seamless 0ms switchover between USB-C PD input (9–20V) and battery power.
-- **Output:** 5.1V @ 5A (25.5W) continuous via high-efficiency synchronous buck-boost converter.
-- **Microcontroller:** Single RP2040 (or RP2350).
-- **Host Link:** Single USB-C cable delivering both 5V power and USB data.
-- **Host Protocol:** Standard USB-IF **HID Power Device Class** (Usage Page `0x84` Power Device / `0x85` Battery System) with composite USB-CDC serial. Linux (`upower`, `systemd-logind`, `NUT`) auto-detects it without any custom host daemons.
+| Area | Reality |
+|---|---|
+| Firmware (`firmware/`) | Runs on the host as a simulator; 22 tests pass against a **mock** TinyUSB. The real RP2040 build has **never been built**. No I2C, no temperature read, fake current values, dormant sleep is a stub. |
+| Hardware docs (`hardware/*.md`) | Prose and ASCII art. No netlist. Several claims are wrong (see the issue list). |
+| KiCad (`hardware/kicad/`) | Stub: outline and labels only. Probably does not open (`;` comments in `.kicad_pcb`). |
+| Docs (`docs/`) | Aspirational. Some say "implemented" for things that are not. |
+| Proof of concept | `hardware/POC_MODULAR.md`: hand-solderable build from commercial modules. The intended first step. |
 
----
+The 2026-09 deep review is tracked as GitHub issues labelled `review` (#1–#19). **Check them before changing anything in the area, and do not copy claims from the docs into code or new docs without verifying them** (see §5).
 
-## 2. Repository Layout
-
-```
-.
-├── docs/                     # Core documentation & engineering specs
-│   ├── README.md             # Primary project README
-│   ├── ARCHITECTURE.md       # Power domains, block diagram, telemetry
-│   ├── HARDWARE_DESIGN.md    # Schematic guidance, components, BOM, PCB layout
-│   ├── USB_HID_UPS_SPEC.md   # HID report descriptor & Linux integration spec
-│   ├── FIRMWARE_ROADMAP.md   # Firmware architecture, TinyUSB stack, milestones
-│   └── CRITICAL_CONSIDERATIONS.md # Edge cases, zombie halt reboot, cell balance
-├── firmware/                 # RP2040 C/C++ firmware (Pico SDK / TinyUSB)
-│   ├── CMakeLists.txt        # Build system (RP2040 UF2 & host tests)
-│   ├── include/              # Headers (tusb_config, descriptors, telemetry, power_mgr, cli)
-│   ├── src/                  # Sources (main, descriptors, telemetry, power_mgr, cli)
-│   └── tests/                # Host unit tests and interactive CLI simulator runner
-├── hardware/                 # Circuit schematics, BOM, PCB layout guidelines, KiCad
-│   ├── SCHEMATICS.md         # 6 detailed subsystem schematics and calculations
-│   ├── BOM.md / BOM.csv      # Complete Bill of Materials with MPNs
-│   ├── PCB_LAYOUT_GUIDELINES.md # 4-layer stackup & 5A thermal guidelines
-│   └── kicad/                # KiCad 7/8 project, schematic, and board layout
-├── README.md                 # Symlink to docs/README.md
-├── AGENTS.md                 # Agent instructions and architectural invariants
-└── .gitignore
+```bash
+gh issue list --label review
 ```
 
----
+## 2. Repo map
 
-## 3. Key Development Guidelines
+```
+docs/        README (symlinked from /README.md), ARCHITECTURE, HARDWARE_DESIGN, USB_HID_UPS_SPEC,
+             FIRMWARE_ROADMAP, CRITICAL_CONSIDERATIONS
+firmware/    CMakeLists.txt, include/, src/{main,usb_descriptors,telemetry,power_mgr,cli}.c,
+             tests/{test_hid_and_power.c, sim_cli_runner.c, mock/tusb.h}
+hardware/    SCHEMATICS.md, PCB_LAYOUT_GUIDELINES.md, BOM.{md,csv}, POC_MODULAR.md, kicad/
+```
 
-### Embedded Safety & Power Protection
-- **Battery Safety:** Never override or bypass hardware battery thresholds (max 8.4V charge, min 6.0V discharge cutoff).
-- **5V Rail Stability:** The 5.1V output to the Raspberry Pi 5 must never experience drops below 4.75V during power source switchover; otherwise the Raspberry Pi 5 PMIC will trigger an under-voltage restart.
-- **No Dynamic Memory in Real-Time Loops:** Do not use `malloc` / `new` inside steady-state USB polling or ADC filtering loops.
-- **Zombie Halt Power-Cycle:** Ensure the post-shutdown power cut timer (45 seconds after `ShutdownImminent`) drops the 5V rail completely so the Pi 5 will auto-boot when mains power returns.
-- **RP2040 Dormant Sleep:** Transition the MCU into dormant sleep (<100µA) once the battery is depleted to avoid destructive parasitic discharge.
+## 3. Commands
 
-### USB HID UPS Compliance
-- Strictly follow the USB HID Power Device usage tables defined in [`docs/USB_HID_UPS_SPEC.md`](docs/USB_HID_UPS_SPEC.md).
-- Ensure `ShutdownImminent` is only asserted when battery capacity is verified critical (<5%) to prevent false shutdowns.
-- Keep USB polling tasks non-blocking to prevent USB bus timeouts.
+Host build and tests (no hardware, no Pico SDK):
 
----
+```bash
+cd firmware
+cmake -B build -S . && cmake --build build
+./build/pi_cemaker_test      # expect 22/22
+./build/pi_cemaker_cli       # interactive CLI simulator
+```
 
-## 4. Documentation References
-- Overview & Specs: [`docs/README.md`](docs/README.md)
-- Power Architecture: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
-- Hardware Design: [`docs/HARDWARE_DESIGN.md`](docs/HARDWARE_DESIGN.md)
-- HID Power Device Spec: [`docs/USB_HID_UPS_SPEC.md`](docs/USB_HID_UPS_SPEC.md)
-- Firmware Plan: [`docs/FIRMWARE_ROADMAP.md`](docs/FIRMWARE_ROADMAP.md)
-- Critical Considerations & Edge Cases: [`docs/CRITICAL_CONSIDERATIONS.md`](docs/CRITICAL_CONSIDERATIONS.md)
+Device build needs `PICO_SDK_PATH`. **Untested**: the host test targets are also defined when the SDK is present, which will likely break that build (issue #18). Fix that before relying on the device build.
+
+There is no CI, no linter config, and no KiCad ERC/DRC yet. `kicad-cli` is not installed on the dev machine.
+
+## 4. Code map and gotchas
+
+- `power_mgr.c`: 9-state machine ticked every 10 ms. `power_mgr_tick` re-asserts the 5 V enable every tick in most states, so manual `force_5v_enable` calls (CLI `powercut`) get overwritten (#2). Mains return during the 45 s countdown cancels the cut (#1).
+- `telemetry.c`: OCV lookup on loaded terminal voltage (#4). Only 3 of 4 ADC channels are read. `BATTERY_DESIGN_CAP_MAH` is 6000 but the pack is **3000 mAh** (2S is series, capacities do not add).
+- `usb_descriptors.c`: HID usage IDs are suspect (#5). Do not add features on top without checking the USB-IF tables.
+- `main.c`: HID report built in two places; keep them in sync or refactor into one builder. Core 1 shares unsynchronised state with core 0 (#14 proposes removing core 1).
+- Pin map lives in `power_mgr.h` and `telemetry.h`: GP15 EN, GP14 PWR_BTN, GP16/17/18 LEDs, GP19 button, GP26–29 ADC. The `POC_MODULAR` build inverts EN polarity.
+- Host vs device code is split with `#if PICO_ON_DEVICE`. Keep host builds compiling and tests passing.
+
+## 5. Working rules
+
+**Safety invariants** (hold these even when simplifying):
+- Never bypass hardware battery limits. Cutoff and protection thresholds belong to the BMS and charger, not to firmware alone.
+- Default and reset state of the 5 V enable must be **rail ON** (fail-on). A hung or rebooting MCU must not drop the Pi's power.
+- The Pi's 5 V rail must not dip during source switchover (the design goal is no glitch).
+- No `malloc` in steady-state loops. Keep USB polling non-blocking.
+- `ShutdownImminent` only when capacity is verified critical, with hysteresis (#4).
+
+**Verify before you state.** This repo has already gone wrong from plausible but unchecked statements (wrong HID usage IDs, wrong Type-C current advertisement, wrong balancer part, `otg_mode`). For anything hardware-, USB-, or Pi-specific, check the datasheet or official doc and cite it in the commit/issue. Mark unverified claims `(verify)`.
+
+**Doc hygiene.**
+- Don't call something "implemented" or "completed" unless it runs on the target. Update `FIRMWARE_ROADMAP.md` when status changes.
+- Pick one part per function. Remove the alternatives (BQ25792/IP2368/SC8721/HY2212 etc.) from docs rather than listing them.
+- Don't hand-edit BOM numbers into both `BOM.md` and `BOM.csv`; the CSV is the source until the schematic can generate it.
+- No real upower/NUT output is in the docs; label illustrative output as such.
+
+**Change discipline.**
+- Add a test for every firmware bug fixed. Existing tests mostly check struct sizes, so they prove little.
+- Hardware: no layout work before schematic capture + ERC. Current direction is 2-layer, 1 oz, about 3–4 A output (#12, #19).
+- Prefer deleting complexity to adding it. Open simplification proposals are in #13, #14, #19.
+
+## 6. Decisions still open (see #19)
+
+1. 3–4 A vs 5 A output, and what the Pi sees on its USB-C port (#7).
+2. Plain buck vs buck-boost for 5 V.
+3. Primary data link: USB-A host port (zero config) vs USB-C with the dwc2 overlay (#6).
+4. Zombie halt: rail cut vs `POWER_OFF_ON_HALT=1` + PWR_BTN pulse (#13).
+5. One charger part: MP2762A (NVDC) vs alternatives.
+
+## 7. References
+
+USB-IF HID Usage Tables for Power Devices (pdcv10.pdf), Raspberry Pi docs on Pi 5 power/USB PD and OTG, MP2762A and HUSB238 datasheets, TinyUSB `hid_device.c`. Project docs: `docs/README.md`, `hardware/POC_MODULAR.md`.

@@ -1,0 +1,1150 @@
+{
+ "C1": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VBUS",
+   "2": "GND"
+  },
+  "value": "1uF 25V"
+ },
+ "C10": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "BTST2",
+   "2": "SW2"
+  },
+  "value": "47nF 25V"
+ },
+ "C11": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_0805_2012Metric",
+  "mpn": "",
+  "pads": {
+   "1": "REGN",
+   "2": "GND"
+  },
+  "value": "4.7uF 10V"
+ },
+ "C12": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VSYS",
+   "2": "GND"
+  },
+  "value": "10uF 25V"
+ },
+ "C13": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VSYS",
+   "2": "GND"
+  },
+  "value": "10uF 25V"
+ },
+ "C14": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VSYS",
+   "2": "GND"
+  },
+  "value": "10uF 25V"
+ },
+ "C15": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VSYS",
+   "2": "GND"
+  },
+  "value": "10uF 25V"
+ },
+ "C16": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VSYS",
+   "2": "GND"
+  },
+  "value": "10uF 25V"
+ },
+ "C17": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VSYS",
+   "2": "GND"
+  },
+  "value": "100nF 25V"
+ },
+ "C18": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "BAT",
+   "2": "GND"
+  },
+  "value": "10uF 16V"
+ },
+ "C19": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "BAT",
+   "2": "GND"
+  },
+  "value": "10uF 16V"
+ },
+ "C2": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VBUS",
+   "2": "GND"
+  },
+  "value": "10uF 25V"
+ },
+ "C20": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "SDRV",
+   "2": "GND"
+  },
+  "value": "1nF 50V"
+ },
+ "C21": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "BOOT_B",
+   "2": "SW_B"
+  },
+  "value": "100nF 16V"
+ },
+ "C22": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VSYS_B",
+   "2": "GND"
+  },
+  "value": "10uF 25V"
+ },
+ "C23": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VSYS_B",
+   "2": "GND"
+  },
+  "value": "10uF 25V"
+ },
+ "C24": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VSYS_B",
+   "2": "GND"
+  },
+  "value": "100nF 25V"
+ },
+ "C25": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1210_3225Metric",
+  "mpn": "",
+  "pads": {
+   "1": "V5_B",
+   "2": "GND"
+  },
+  "value": "33uF 16V"
+ },
+ "C26": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1210_3225Metric",
+  "mpn": "",
+  "pads": {
+   "1": "V5_B",
+   "2": "GND"
+  },
+  "value": "33uF 16V"
+ },
+ "C27": {
+  "dnp": true,
+  "fp": "Capacitor_SMD:C_1210_3225Metric",
+  "mpn": "",
+  "pads": {
+   "1": "V5_B",
+   "2": "GND"
+  },
+  "value": "33uF 16V (spare)"
+ },
+ "C28": {
+  "dnp": true,
+  "fp": "Capacitor_SMD:C_1210_3225Metric",
+  "mpn": "",
+  "pads": {
+   "1": "V5_B",
+   "2": "GND"
+  },
+  "value": "33uF 16V (spare)"
+ },
+ "C29": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "V5_B",
+   "2": "FB"
+  },
+  "value": "33pF (CFF)"
+ },
+ "C3": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VBUS",
+   "2": "GND"
+  },
+  "value": "10uF 25V"
+ },
+ "C30": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_0805_2012Metric",
+  "mpn": "",
+  "pads": {
+   "1": "V5",
+   "2": "GND"
+  },
+  "value": "10uF 10V"
+ },
+ "C4": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VBUS",
+   "2": "GND"
+  },
+  "value": "100nF 25V"
+ },
+ "C5": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "PMID",
+   "2": "GND"
+  },
+  "value": "10uF 25V"
+ },
+ "C6": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "PMID",
+   "2": "GND"
+  },
+  "value": "10uF 25V"
+ },
+ "C7": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "PMID",
+   "2": "GND"
+  },
+  "value": "10uF 25V"
+ },
+ "C8": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "PMID",
+   "2": "GND"
+  },
+  "value": "100nF 25V"
+ },
+ "C9": {
+  "dnp": false,
+  "fp": "Capacitor_SMD:C_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "BTST1",
+   "2": "SW1"
+  },
+  "value": "47nF 25V"
+ },
+ "D1": {
+  "dnp": false,
+  "fp": "Diode_SMD:D_SMA",
+  "mpn": "SMAJ13A (verify clamp vs 30 V parts)",
+  "pads": {
+   "1": "VBUS",
+   "2": "GND"
+  },
+  "value": "SMAJ13A"
+ },
+ "D2": {
+  "dnp": false,
+  "fp": "Diode_SMD:D_SMA",
+  "mpn": "SS34 (verify)",
+  "pads": {
+   "1": "PICO_VSYS",
+   "2": "V5"
+  },
+  "value": "SS34"
+ },
+ "D3": {
+  "dnp": false,
+  "fp": "LED_SMD:LED_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "GND",
+   "2": "LEDA0"
+  },
+  "value": "green"
+ },
+ "D4": {
+  "dnp": false,
+  "fp": "LED_SMD:LED_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "GND",
+   "2": "LEDA1"
+  },
+  "value": "amber"
+ },
+ "D5": {
+  "dnp": false,
+  "fp": "LED_SMD:LED_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "GND",
+   "2": "LEDA2"
+  },
+  "value": "red"
+ },
+ "F1": {
+  "dnp": false,
+  "fp": "Fuse:Fuse_1206_3216Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VBUS_RAW",
+   "2": "VBUS"
+  },
+  "value": "3.15A or 0R (fit one)"
+ },
+ "H1": {
+  "dnp": false,
+  "fp": "MountingHole:MountingHole_2.7mm_M2.5_Pad",
+  "mpn": "",
+  "pads": {},
+  "value": "M2.5"
+ },
+ "H2": {
+  "dnp": false,
+  "fp": "MountingHole:MountingHole_2.7mm_M2.5_Pad",
+  "mpn": "",
+  "pads": {},
+  "value": "M2.5"
+ },
+ "H3": {
+  "dnp": false,
+  "fp": "MountingHole:MountingHole_2.7mm_M2.5_Pad",
+  "mpn": "",
+  "pads": {},
+  "value": "M2.5"
+ },
+ "H4": {
+  "dnp": false,
+  "fp": "MountingHole:MountingHole_2.7mm_M2.5_Pad",
+  "mpn": "",
+  "pads": {},
+  "value": "M2.5"
+ },
+ "J1": {
+  "dnp": false,
+  "fp": "Connector_USB:USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal",
+  "mpn": "GCT USB4105-GF-A (verify)",
+  "pads": {
+   "A1": "GND",
+   "A12": "GND",
+   "A4": "VBUS_RAW",
+   "A5": "CC1_IN",
+   "A6": "USB_DP",
+   "A7": "USB_DM",
+   "A9": "VBUS_RAW",
+   "B1": "GND",
+   "B12": "GND",
+   "B4": "VBUS_RAW",
+   "B5": "CC2_IN",
+   "B6": "USB_DP",
+   "B7": "USB_DM",
+   "B9": "VBUS_RAW",
+   "SH": "GND"
+  },
+  "value": "USB-C in (PD sink)"
+ },
+ "J2": {
+  "dnp": false,
+  "fp": "Connector_USB:USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal",
+  "mpn": "GCT USB4105-GF-A (verify)",
+  "pads": {
+   "A1": "GND",
+   "A12": "GND",
+   "A4": "V5",
+   "A5": "CC1_OUT",
+   "A9": "V5",
+   "B1": "GND",
+   "B12": "GND",
+   "B4": "V5",
+   "B5": "CC2_OUT",
+   "B9": "V5",
+   "SH": "GND"
+  },
+  "value": "USB-C out to Pi 5 (power only)"
+ },
+ "J3": {
+  "dnp": false,
+  "fp": "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal",
+  "mpn": "",
+  "pads": {
+   "1": "PACK_P",
+   "2": "GND"
+  },
+  "value": "PACK+ / PACK- (off-board 2S BMS)"
+ },
+ "J4": {
+  "dnp": false,
+  "fp": "TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal",
+  "mpn": "",
+  "pads": {
+   "1": "V5",
+   "2": "GND"
+  },
+  "value": "5V OUT / GND"
+ },
+ "J5": {
+  "dnp": false,
+  "fp": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+  "mpn": "",
+  "pads": {
+   "1": "PI_PWR_BTN",
+   "2": "GND"
+  },
+  "value": "To Pi 5 J2 power button"
+ },
+ "J6": {
+  "dnp": false,
+  "fp": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+  "mpn": "",
+  "pads": {
+   "1": "TS",
+   "2": "GND"
+  },
+  "value": "NTC (optional)"
+ },
+ "J7": {
+  "dnp": false,
+  "fp": "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical",
+  "mpn": "",
+  "pads": {
+   "1": "SDA",
+   "2": "SCL"
+  },
+  "value": "I2C expansion (3V3 SDA)"
+ },
+ "JP1": {
+  "dnp": false,
+  "fp": "Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm",
+  "mpn": "",
+  "pads": {
+   "1": "VSYS",
+   "2": "VSYS_B"
+  },
+  "value": "VSYS link"
+ },
+ "JP2": {
+  "dnp": false,
+  "fp": "Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm",
+  "mpn": "",
+  "pads": {
+   "1": "V5_B",
+   "2": "V5"
+  },
+  "value": "5V link"
+ },
+ "JP3": {
+  "dnp": false,
+  "fp": "Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm",
+  "mpn": "",
+  "pads": {
+   "1": "PACK_P",
+   "2": "BAT"
+  },
+  "value": "PACK link"
+ },
+ "L1": {
+  "dnp": false,
+  "fp": "Inductor_SMD:L_Bourns_SRP7028A_7.3x6.6mm",
+  "mpn": "1 uH, Isat>=8 A shielded (verify)",
+  "pads": {
+   "1": "SW1",
+   "2": "SW2"
+  },
+  "value": "1uH >=8A sat"
+ },
+ "L2": {
+  "dnp": false,
+  "fp": "Inductor_SMD:L_Bourns_SRP7028A_7.3x6.6mm",
+  "mpn": "4.7 uH, Isat>=8 A (verify)",
+  "pads": {
+   "1": "SW_B",
+   "2": "V5_B"
+  },
+  "value": "4.7uH >=8A sat"
+ },
+ "Q1": {
+  "dnp": false,
+  "fp": "Package_TO_SOT_SMD:SOT-23",
+  "mpn": "",
+  "pads": {
+   "1": "EN_KILL",
+   "2": "GND",
+   "3": "EN_B"
+  },
+  "value": "2N7002"
+ },
+ "Q2": {
+  "dnp": false,
+  "fp": "Package_TO_SOT_SMD:SOT-23",
+  "mpn": "",
+  "pads": {
+   "1": "PWR_BTN",
+   "2": "GND",
+   "3": "PI_PWR_BTN"
+  },
+  "value": "2N7002"
+ },
+ "R1": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "HVSET",
+   "2": "GND"
+  },
+  "value": "10k (12 V)"
+ },
+ "R10": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "INT",
+   "2": "+3V3"
+  },
+  "value": "10k"
+ },
+ "R11": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "V5_B",
+   "2": "FB"
+  },
+  "value": "102k (FBT)"
+ },
+ "R12": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "FB",
+   "2": "GND"
+  },
+  "value": "19.1k (FBB)"
+ },
+ "R13": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "VSYS_B",
+   "2": "EN_B"
+  },
+  "value": "62k (ENT)"
+ },
+ "R14": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "EN_B",
+   "2": "GND"
+  },
+  "value": "21.5k (ENB)"
+ },
+ "R15": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "PG",
+   "2": "+3V3"
+  },
+  "value": "10k"
+ },
+ "R16": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "EN_KILL",
+   "2": "GND"
+  },
+  "value": "100k (gate pull-down)"
+ },
+ "R17": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "V5",
+   "2": "CC1_OUT"
+  },
+  "value": "10k (Rp, 3 A)"
+ },
+ "R18": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "V5",
+   "2": "CC2_OUT"
+  },
+  "value": "10k (Rp, 3 A)"
+ },
+ "R19": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "SDA",
+   "2": "+3V3"
+  },
+  "value": "10k"
+ },
+ "R2": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "HISET",
+   "2": "GND"
+  },
+  "value": "22.6k (3 A)"
+ },
+ "R20": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "SCL",
+   "2": "+3V3"
+  },
+  "value": "10k"
+ },
+ "R21": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "LED_PWR",
+   "2": "LEDA0"
+  },
+  "value": "1k"
+ },
+ "R22": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "LED_BAT",
+   "2": "LEDA1"
+  },
+  "value": "1k"
+ },
+ "R23": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "LED_FLT",
+   "2": "LEDA2"
+  },
+  "value": "1k"
+ },
+ "R24": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "PWR_BTN",
+   "2": "GND"
+  },
+  "value": "100k (gate pull-down)"
+ },
+ "R3": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "PROG",
+   "2": "GND"
+  },
+  "value": "6.04k 1% (2S,1.5MHz)"
+ },
+ "R4": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "CE",
+   "2": "GND"
+  },
+  "value": "10k (CE low = charge on)"
+ },
+ "R5": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "PACK_P",
+   "2": "BATP"
+  },
+  "value": "100R"
+ },
+ "R6": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "REGN",
+   "2": "TS"
+  },
+  "value": "5.24k (RT1)"
+ },
+ "R7": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "TS",
+   "2": "GND"
+  },
+  "value": "30.31k (RT2)"
+ },
+ "R8": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "TS",
+   "2": "GND"
+  },
+  "value": "10k fixed NTC stand-in"
+ },
+ "R9": {
+  "dnp": false,
+  "fp": "Resistor_SMD:R_0603_1608Metric",
+  "mpn": "",
+  "pads": {
+   "1": "STAT",
+   "2": "+3V3"
+  },
+  "value": "10k"
+ },
+ "SW1": {
+  "dnp": false,
+  "fp": "Button_Switch_SMD:SW_SPST_PTS810",
+  "mpn": "",
+  "pads": {
+   "1": "USER_BTN",
+   "2": "GND"
+  },
+  "value": "USER"
+ },
+ "TP1": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "VBUS"
+  },
+  "value": "VBUS"
+ },
+ "TP10": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "STAT"
+  },
+  "value": "STAT"
+ },
+ "TP11": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "INT"
+  },
+  "value": "INT"
+ },
+ "TP12": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "PACK_P"
+  },
+  "value": "PACK_P"
+ },
+ "TP13": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "SW_B"
+  },
+  "value": "SW_B"
+ },
+ "TP14": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "EN_B"
+  },
+  "value": "EN_B"
+ },
+ "TP15": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "V5_B"
+  },
+  "value": "V5_B"
+ },
+ "TP16": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "FB"
+  },
+  "value": "FB"
+ },
+ "TP17": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "PG"
+  },
+  "value": "PG"
+ },
+ "TP18": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "VSYS_B"
+  },
+  "value": "VSYS_B"
+ },
+ "TP19": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "V5"
+  },
+  "value": "V5"
+ },
+ "TP2": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "PMID"
+  },
+  "value": "PMID"
+ },
+ "TP20": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "+3V3"
+  },
+  "value": "+3V3"
+ },
+ "TP21": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "SDA"
+  },
+  "value": "SDA"
+ },
+ "TP22": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "SCL"
+  },
+  "value": "SCL"
+ },
+ "TP23": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "RUN"
+  },
+  "value": "RUN"
+ },
+ "TP24": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "GND"
+  },
+  "value": "GND"
+ },
+ "TP25": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "GND"
+  },
+  "value": "GND"
+ },
+ "TP26": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "GND"
+  },
+  "value": "GND"
+ },
+ "TP27": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "GND"
+  },
+  "value": "GND"
+ },
+ "TP3": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "SW1"
+  },
+  "value": "SW1"
+ },
+ "TP4": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "SW2"
+  },
+  "value": "SW2"
+ },
+ "TP5": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "REGN"
+  },
+  "value": "REGN"
+ },
+ "TP6": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "TS"
+  },
+  "value": "TS"
+ },
+ "TP7": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "QON"
+  },
+  "value": "QON"
+ },
+ "TP8": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "VSYS"
+  },
+  "value": "VSYS"
+ },
+ "TP9": {
+  "dnp": false,
+  "fp": "TestPoint:TestPoint_Pad_D1.0mm",
+  "mpn": "",
+  "pads": {
+   "1": "BAT"
+  },
+  "value": "BAT"
+ },
+ "U1": {
+  "dnp": false,
+  "fp": "Package_DFN_QFN:DFN-10-1EP_3x3mm_P0.5mm_EP1.65x2.38mm",
+  "mpn": "Hynetek HUSB238 DFN-10 (verify package)",
+  "pads": {
+   "1": "VBUS",
+   "11": "GND",
+   "2": "USB_DP",
+   "3": "USB_DM",
+   "4": "CC1_IN",
+   "5": "CC2_IN",
+   "6": "SDA",
+   "7": "SCL",
+   "8": "HVSET",
+   "9": "HISET"
+  },
+  "value": "HUSB238"
+ },
+ "U2": {
+  "dnp": false,
+  "fp": "pi-cemaker:VQFN-HR-29_RQM0029A_4x4mm",
+  "mpn": "TI BQ25792RQMR",
+  "pads": {
+   "1": "STAT",
+   "10": "GND",
+   "11": "GND",
+   "12": "QON",
+   "13": "CE",
+   "14": "SCL",
+   "15": "SDA",
+   "16": "TS",
+   "17": "REGN",
+   "18": "BATP",
+   "19": "BTST2",
+   "2": "VBUS",
+   "20": "PROG",
+   "21": "INT",
+   "22": "BAT",
+   "23": "BAT",
+   "24": "SDRV",
+   "25": "VSYS",
+   "26": "SW2",
+   "27": "GND",
+   "28": "SW1",
+   "29": "PMID",
+   "3": "VBUS",
+   "4": "BTST1",
+   "5": "REGN",
+   "8": "VBUS",
+   "9": "VBUS"
+  },
+  "value": "BQ25792"
+ },
+ "U3": {
+  "dnp": false,
+  "fp": "Package_SON:WSON-12-1EP_3x3mm_P0.5mm_EP1.5x2.5mm",
+  "mpn": "TI LMR51450SDRRR",
+  "pads": {
+   "1": "SW_B",
+   "10": "VSYS_B",
+   "11": "VSYS_B",
+   "12": "VSYS_B",
+   "13": "GND",
+   "2": "SW_B",
+   "3": "SW_B",
+   "4": "BOOT_B",
+   "5": "PG",
+   "7": "FB",
+   "8": "GND",
+   "9": "EN_B"
+  },
+  "value": "LMR51450SDRRR"
+ },
+ "U4": {
+  "dnp": false,
+  "fp": "Module:RaspberryPi_Pico_Common_THT",
+  "mpn": "Pico (headers hand-fitted)",
+  "pads": {
+   "10": "STAT",
+   "11": "PG",
+   "13": "GND",
+   "18": "GND",
+   "19": "PWR_BTN",
+   "20": "EN_KILL",
+   "21": "LED_PWR",
+   "22": "LED_BAT",
+   "23": "GND",
+   "24": "LED_FLT",
+   "25": "USER_BTN",
+   "28": "GND",
+   "3": "GND",
+   "30": "RUN",
+   "33": "GND",
+   "36": "+3V3",
+   "38": "GND",
+   "39": "PICO_VSYS",
+   "6": "SDA",
+   "7": "SCL",
+   "8": "GND",
+   "9": "INT"
+  },
+  "value": "Raspberry Pi Pico (RP2040)"
+ }
+}

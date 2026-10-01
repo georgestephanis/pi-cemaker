@@ -1,0 +1,78 @@
+Refs,Qty,Value,Footprint,MPN,DNP,Status
+C1,1,1uF 25V,Capacitor_SMD:C_0603_1608Metric,,,UNVERIFIED
+C10 C9,2,47nF 25V,Capacitor_SMD:C_0603_1608Metric,,,UNVERIFIED
+C11,1,4.7uF 10V,Capacitor_SMD:C_0805_2012Metric,,,UNVERIFIED
+C12 C13 C14 C15 C16 C2 C22 C23 C3 C5 C6 C7,12,10uF 25V,Capacitor_SMD:C_1206_3216Metric,,,UNVERIFIED
+C17 C24 C4 C8,4,100nF 25V,Capacitor_SMD:C_0603_1608Metric,,,UNVERIFIED
+C18 C19,2,10uF 16V,Capacitor_SMD:C_1206_3216Metric,,,UNVERIFIED
+C20,1,1nF 50V,Capacitor_SMD:C_0603_1608Metric,,,UNVERIFIED
+C21,1,100nF 16V,Capacitor_SMD:C_0603_1608Metric,,,UNVERIFIED
+C25 C26,2,33uF 16V,Capacitor_SMD:C_1210_3225Metric,,,UNVERIFIED
+C27 C28,2,33uF 16V (spare),Capacitor_SMD:C_1210_3225Metric,,DNP,UNVERIFIED
+C29,1,33pF (CFF),Capacitor_SMD:C_0603_1608Metric,,,UNVERIFIED
+C30,1,10uF 10V,Capacitor_SMD:C_0805_2012Metric,,,UNVERIFIED
+D1,1,SMAJ13A,Diode_SMD:D_SMA,SMAJ13A (verify clamp vs 30 V parts),,UNVERIFIED
+D2,1,SS34,Diode_SMD:D_SMA,SS34 (verify),,UNVERIFIED
+D3,1,green,LED_SMD:LED_0603_1608Metric,,,UNVERIFIED
+D4,1,amber,LED_SMD:LED_0603_1608Metric,,,UNVERIFIED
+D5,1,red,LED_SMD:LED_0603_1608Metric,,,UNVERIFIED
+F1,1,3.15A or 0R (fit one),Fuse:Fuse_1206_3216Metric,,,UNVERIFIED
+H1 H2 H3 H4,4,M2.5,MountingHole:MountingHole_2.7mm_M2.5_Pad,,,UNVERIFIED
+J1,1,USB-C in (PD sink),Connector_USB:USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal,GCT USB4105-GF-A (verify),,UNVERIFIED
+J2,1,USB-C out to Pi 5 (power only),Connector_USB:USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal,GCT USB4105-GF-A (verify),,UNVERIFIED
+J3,1,PACK+ / PACK- (off-board 2S BMS),"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal",,,UNVERIFIED
+J4,1,5V OUT / GND,"TerminalBlock_Phoenix:TerminalBlock_Phoenix_MKDS-1,5-2_1x02_P5.00mm_Horizontal",,,UNVERIFIED
+J5,1,To Pi 5 J2 power button,Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,,,UNVERIFIED
+J6,1,NTC (optional),Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,,,UNVERIFIED
+J7,1,I2C expansion (3V3 SDA),Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical,,,UNVERIFIED
+JP1,1,VSYS link,Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm,,,UNVERIFIED
+JP2,1,5V link,Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm,,,UNVERIFIED
+JP3,1,PACK link,Jumper:SolderJumper-2_P1.3mm_Bridged_RoundedPad1.0x1.5mm,,,UNVERIFIED
+L1,1,1uH >=8A sat,Inductor_SMD:L_Bourns_SRP7028A_7.3x6.6mm,"1 uH, Isat>=8 A shielded (verify)",,UNVERIFIED
+L2,1,4.7uH >=8A sat,Inductor_SMD:L_Bourns_SRP7028A_7.3x6.6mm,"4.7 uH, Isat>=8 A (verify)",,UNVERIFIED
+Q1 Q2,2,2N7002,Package_TO_SOT_SMD:SOT-23,,,UNVERIFIED
+R1,1,10k (12 V),Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R10 R15 R19 R20 R9,5,10k,Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R11,1,102k (FBT),Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R12,1,19.1k (FBB),Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R13,1,62k (ENT),Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R14,1,21.5k (ENB),Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R16 R24,2,100k (gate pull-down),Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R17 R18,2,"10k (Rp, 3 A)",Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R2,1,22.6k (3 A),Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R21 R22 R23,3,1k,Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R3,1,"6.04k 1% (2S,1.5MHz)",Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R4,1,10k (CE low = charge on),Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R5,1,100R,Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R6,1,5.24k (RT1),Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R7,1,30.31k (RT2),Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+R8,1,10k fixed NTC stand-in,Resistor_SMD:R_0603_1608Metric,,,UNVERIFIED
+SW1,1,USER,Button_Switch_SMD:SW_SPST_PTS810,,,UNVERIFIED
+TP1,1,VBUS,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP10,1,STAT,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP11,1,INT,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP12,1,PACK_P,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP13,1,SW_B,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP14,1,EN_B,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP15,1,V5_B,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP16,1,FB,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP17,1,PG,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP18,1,VSYS_B,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP19,1,V5,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP2,1,PMID,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP20,1,+3V3,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP21,1,SDA,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP22,1,SCL,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP23,1,RUN,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP24 TP25 TP26 TP27,4,GND,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP3,1,SW1,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP4,1,SW2,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP5,1,REGN,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP6,1,TS,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP7,1,QON,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP8,1,VSYS,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+TP9,1,BAT,TestPoint:TestPoint_Pad_D1.0mm,,,UNVERIFIED
+U1,1,HUSB238,Package_DFN_QFN:DFN-10-1EP_3x3mm_P0.5mm_EP1.65x2.38mm,Hynetek HUSB238 DFN-10 (verify package),,UNVERIFIED
+U2,1,BQ25792,pi-cemaker:VQFN-HR-29_RQM0029A_4x4mm,TI BQ25792RQMR,,MPN verified
+U3,1,LMR51450SDRRR,Package_SON:WSON-12-1EP_3x3mm_P0.5mm_EP1.5x2.5mm,TI LMR51450SDRRR,,MPN verified
+U4,1,Raspberry Pi Pico (RP2040),Module:RaspberryPi_Pico_Common_THT,Pico (headers hand-fitted),,MPN verified
